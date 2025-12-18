@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veille Technologique - IA et Monde du Travail</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        header {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 4px solid #667eea;
+        }
+        
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        .intro-section {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .intro-section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+        
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .article-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .article-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            min-height: 100px;
+            display: flex;
+            align-items: flex-end;
+        }
+        
+        .article-number {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        
+        .article-header h3 {
+            font-size: 1.4em;
+            margin: 0;
+        }
+        
+        .article-content {
+            padding: 25px;
+        }
+        
+        .article-content h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .article-description {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 0.95em;
+        }
+        
+        .article-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .tag {
+            background: #f0f0f0;
+            color: #667eea;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 500;
+        }
+        
+        .article-impact {
+            background: #f9f9f9;
+            padding: 15px;
+            border-left: 4px solid #667eea;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        
+        .article-impact strong {
+            color: #667eea;
+        }
+        
+        .read-more {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        .read-more:hover {
+            background: #764ba2;
+        }
+        
+        .statistics {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .stat-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-size: 0.95em;
+            opacity: 0.9;
+        }
+        
+        .issues-section {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .issues-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+        
+        .issue-item {
+            padding: 15px;
+            margin-bottom: 15px;
+            background: #f9f9f9;
+            border-left: 4px solid #667eea;
+            border-radius: 4px;
+        }
+        
+        .issue-item h4 {
+            color: #764ba2;
+            margin-bottom: 8px;
+        }
+        
+        footer {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+        }
+        
+        .date {
+            color: #999;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🤖 Veille Technologique</h1>
+        <p>Intelligence Artificielle & Avenir du Travail</p>
+    </header>
+    
+    <div class="container">
+        <div class="intro-section">
+            <h2>Contexte & Enjeux</h2>
+            <p>
+                L'Intelligence Artificielle transforme profondément le paysage professionnel. Entre automatisation, 
+                réorganisation des métiers et questions éthiques, cette veille explore les défis majeurs et les 
+                opportunités qu'offre l'IA aux entreprises et aux travailleurs. Découvrez les dernières analyses, 
+                tendances et perspectives sur l'impact de l'IA sur le monde du travail.
+            </p>
+        </div>
+        
+        <div class="statistics">
+            <h2>Chiffres Clés</h2>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-number">37%</div>
+                    <div class="stat-label">Des emplois concernés par l'automatisation d'ici 2030</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">78%</div>
+                    <div class="stat-label">Des entreprises adoptant l'IA pour augmenter la productivité</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">62%</div>
+                    <div class="stat-label">Des salariés inquiets de l'impact de l'IA sur leur emploi</div>
+                </div>
+            </div>
+        </div>
+        
+        <h2 style="color: white; margin-bottom: 30px; font-size: 2em;">Articles & Ressources</h2>
+        
+        <div class="articles-grid">
+            <!-- Article 1 -->
+            <div class="article-card">
+                <div class="article-header">
+                    <div>
+                        <div class="article-number">📰 Article 1</div>
+                        <h3>L'Automatisation des Métiers</h3>
+                    </div>
+                </div>
+                <div class="article-content">
+                    <h4>Impact de l'automatisation sur l'emploi</h4>
+                    <p class="article-description">
+                        Analyse approfondie des métiers en première ligne face à l'automatisation. 
+                        Quels secteurs sont les plus touchés et comment les entreprises se réadaptent.
+                    </p>
+                    <div class="article-tags">
+                        <span class="tag">Automatisation</span>
+                        <span class="tag">Emploi</span>
+                        <span class="tag">Transformation</span>
+                    </div>
+                    <div class="article-impact">
+                        <strong>Impact majeur:</strong> Les rôles répétitifs et basés sur des règles 
+                        sont les plus vulnérables à l'automatisation.
+                    </div>
+                    <p class="article-description">
+                        <strong>Secteurs affectés:</strong> Manufacturing, customer service, data entry, 
+                        comptabilité de base.
+                    </p>
+                    <a href="#" class="read-more">Lire l'article complet</a>
+                </div>
+            </div>
+            
+            <!-- Article 2 -->
+            <div class="article-card">
+                <div class="article-header">
+                    <div>
+                        <div class="article-number">📰 Article 2</div>
+                        <h3>Reskilling & Upskilling</h3>
+                    </div>
+                </div>
+                <div class="article-content">
+                    <h4>Former les talents pour l'ère de l'IA</h4>
+                    <p class="article-description">
+                        Comment les entreprises et gouvernements investissent dans la formation continue 
+                        pour adapter les compétences aux besoins futurs.
+                    </p>
+                    <div class="article-tags">
+                        <span class="tag">Formation</span>
+                        <span class="tag">Compétences</span>
+                        <span class="tag">Développement</span>
+                    </div>
+                    <div class="article-impact">
+                        <strong>Solution clé:</strong> Les programmes de reskilling deviennent 
+                        essentiels pour maintenir l'employabilité.
+                    </div>
+                    <p class="article-description">
+                        <strong>Domaines prioritaires:</strong> Data science, cybersécurité, gestion de projet, 
+                        créativité et intelligence émotionnelle.
+                    </p>
+                    <a href="#" class="read-more">Lire l'article complet</a>
+                </div>
+            </div>
+            
+            <!-- Article 3 -->
+            <div class="article-card">
+                <div class="article-header">
+                    <div>
+                        <div class="article-number">📰 Article 3</div>
+                        <h3>Éthique & Biais de l'IA</h3>
+                    </div>
+                </div>
+                <div class="article-content">
+                    <h4>Enjeux éthiques et discriminations</h4>
+                    <p class="article-description">
+                        Les défis éthiques majeurs : biais algorithmiques, discrimination dans le recrutement 
+                        et la gestion des ressources humaines.
+                    </p>
+                    <div class="article-tags">
+                        <span class="tag">Éthique</span>
+                        <span class="tag">Biais</span>
+                        <span class="tag">RH</span>
+                    </div>
+                    <div class="article-impact">
+                        <strong>Risque majeur:</strong> Les algorithmes reproduisent et amplifient les 
+                        biais présents dans les données historiques.
+                    </div>
+                    <p class="article-description">
+                        <strong>Cas d'usage critiques:</strong> Recrutement, évaluation de performance, 
+                        détermination des salaires, promotion.
+                    </p>
+                    <a href="#" class="read-more">Lire l'article complet</a>
+                </div>
+            </div>
+            
+            <!-- Article 4 -->
+            <div class="article-card">
+                <div class="article-header">
+                    <div>
+                        <div class="article-number">📰 Article 4</div>
+                        <h3>IA Générative & Créativité</h3>
+                    </div>
+                </div>
+                <div class="article-content">
+                    <h4>Chatbots, GPT et création de contenu</h4>
+                    <p class="article-description">
+                        Comment les IA génératives comme ChatGPT et les modèles de langage changent 
+                        les métiers créatifs et de connaissance.
+                    </p>
+                    <div class="article-tags">
+                        <span class="tag">IA Générative</span>
+                        <span class="tag">Créativité</span>
+                        <span class="tag">Productivité</span>
+                    </div>
+                    <div class="article-impact">
+                        <strong>Opportunité:</strong> Augmentation de la productivité et libération 
+                        du temps pour des tâches à haute valeur ajoutée.
+                    </div>
+                    <p class="article-description">
+                        <strong>Métiers impactés:</strong> Rédaction, design graphique, développement, 
+                        support client, marketing.
+                    </p>
+                    <a href="#" class="read-more">Lire l'article complet</a>
+                </div>
+            </div>
+            
+            <!-- Article 5 -->
+            <div class="article-card">
+                <div class="article-header">
+                    <div>
+                        <div class="article-number">📰 Article 5</div>
+                        <h3>Régulation & Gouvernance</h3>
+                    </div>
+                </div>
+                <div class="article-content">
+                    <h4>Cadres légaux et régulation de l'IA</h4>
+                    <p class="article-description">
+                        Tour d'horizon des régulations émergentes: AI Act européenne, Executive Order 
+                        américain et initiatives mondiales de gouvernance.
+                    </p>
+                    <div class="article-tags">
+                        <span class="tag">Régulation</span>
+                        <span class="tag">Légal</span>
+                        <span class="tag">Compliance</span>
+                    </div>
+                    <div class="article-impact">
+                        <strong>Cadre émergent:</strong> L'IA Act européenne établit des standards de 
+                        conformité obligatoires pour les entreprises.
+                    </div>
+                    <p class="article-description">
+                        <strong>Domaines régulés:</strong> Transparence algorithmique, droit à l'explication, 
+                        responsabilité et audit.
+                    </p>
+                    <a href="#" class="read-more">Lire l'article complet</a>
+                </div>
+            </div>
+            
+            <!-- Article 6 -->
+            <div class="article-card">
+                <div class="article-header">
+                    <div>
+                        <div class="article-number">📰 Article 6</div>
+                        <h3>Collaboration Homme-Machine</h3>
+                    </div>
+                </div>
+                <div class="article-content">
+                    <h4>L'avenir du travail: augmentation vs remplacement</h4>
+                    <p class="article-description">
+                        Comment concevoir des systèmes d'IA qui augmentent les capacités humaines 
+                        plutôt que de les remplacer.
+                    </p>
+                    <div class="article-tags">
+                        <span class="tag">Collaboration</span>
+                        <span class="tag">Augmentation</span>
+                        <span class="tag">Futur du travail</span>
+                    </div>
+                    <div class="article-impact">
+                        <strong>Perspective optimiste:</strong> L'IA crée de nouveaux métiers et 
+                        améliore les conditions de travail.
+                    </div>
+                    <p class="article-description">
+                        <strong>Nouveaux métiers:</strong> Prompt engineer, AI trainer, data annotator, 
+                        AI ethicist, machine learning operations.
+                    </p>
+                    <a href="#" class="read-more">Lire l'article complet</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="issues-section">
+            <h2>⚠️ Problématiques Principales</h2>
+            
+            <div class="issue-item">
+                <h4>1. Déplacement d'emploi</h4>
+                <p>
+                    Les métiers traditionnels diminuent tandis que les besoins en nouvelles compétences 
+                    augmentent. Gap de compétences entre offre et demande de formation.
+                </p>
+            </div>
+            
+            <div class="issue-item">
+                <h4>2. Inégalités croissantes</h4>
+                <p>
+                    Les travailleurs hautement qualifiés bénéficient de l'IA tandis que les moins qualifiés 
+                    voient leurs salaires baisser. Risque d'élargissement du fossé économique.
+                </p>
+            </div>
+            
+            <div class="issue-item">
+                <h4>3. Bien-être et surveillance</h4>
+                <p>
+                    Augmentation de la surveillance au travail via IA, risques de burnout, perte d'autonomie 
+                    et déqualification des tâches.
+                </p>
+            </div>
+            
+            <div class="issue-item">
+                <h4>4. Transparence et explicabilité</h4>
+                <p>
+                    Les décisions automatisées affectant les salariés manquent de transparence. 
+                    Difficultés à contester les algorithmes de recrutement ou d'évaluation.
+                </p>
+            </div>
+            
+            <div class="issue-item">
+                <h4>5. Propriété intellectuelle et droits d'auteur</h4>
+                <p>
+                    Questions sur la propriété des contenus générés par IA et la compensation des créateurs 
+                    dont les œuvres ont entraîné les modèles.
+                </p>
+            </div>
+            
+            <div class="issue-item">
+                <h4>6. Cybersécurité et données</h4>
+                <p>
+                    Protection des données personnelles dans les systèmes d'IA. Risques de piratage 
+                    et d'utilisation malveillante des données d'emploi.
+                </p>
+            </div>
+        </div>
+        
+        <div class="intro-section">
+            <h2>💡 Recommandations & Perspectives</h2>
+            <ul style="margin-left: 20px; line-height: 2;">
+                <li><strong>Pour les entreprises:</strong> Investir dans la formation continue, développer une stratégie d'IA éthique, impliquer les salariés dans la transformation.</li>
+                <li><strong>Pour les gouvernements:</strong> Créer des filets de sécurité sociale, financer les programmes de reconversion, établir des cadres régulateurs clairs.</li>
+                <li><strong>Pour les travailleurs:</strong> Acquérir des compétences complémentaires à l'IA (créativité, empathie), rester flexible et continuer d'apprendre.</li>
+                <li><strong>Pour tous:</strong> Participer au débat démocratique sur la gouvernance de l'IA et exiger de la transparence.</li>
+            </ul>
+        </div>
+    </div>
+    
+    <footer>
+        <p><strong>Veille Technologique - Intelligence Artificielle et Monde du Travail</strong></p>
+        <p class="date">Mise à jour : Décembre 2024</p>
+        <p style="margin-top: 20px; opacity: 0.8;">
+            Cette veille synthétise les principales tendances et enjeux actuels autour de l'IA et du travail.
+        </p>
+    </footer>
+</body>
+</html>
