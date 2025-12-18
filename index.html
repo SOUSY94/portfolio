@@ -6,94 +6,270 @@
   <title>Portfolio Ouraga</title>
   <style>
     :root{
-      --bg: #f4f4f4;
+      --bg: #0a0e27;
       --card:#ffffff;
       --text:#111;
       --muted:#6b7280;
-      --accent:#0077cc;
-      --glass: rgba(255,255,255,0.6);
-      --radius:12px;
+      --accent:#6366f1;
+      --accent-2:#ec4899;
+      --glass: rgba(255,255,255,0.7);
+      --radius:16px;
     }
     .dark{
-      --bg:#0b0f14;
-      --card: #0f1720;
+      --bg:#0a0e27;
+      --card: #1a1f3a;
       --text:#e6eef6;
       --muted:#98a2b3;
-      --accent:#1ea7ff;
-      --glass: rgba(255,255,255,0.03);
+      --accent:#818cf8;
+      --accent-2:#f472b6;
+      --glass: rgba(255,255,255,0.05);
     }
-    *{box-sizing:border-box}
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
     html,body{height:100%;}
     body{
       margin:0;
-      font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-      background:linear-gradient(180deg,var(--bg), #e9eef6 120%);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background:linear-gradient(135deg, var(--bg) 0%, #1a1f3a 50%, #2d1b4e 100%);
       color:var(--text);
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
-      line-height:1.45;
+      line-height:1.6;
       transition:background .3s ease, color .3s ease;
+      overflow-x:hidden;
+    }
+    body::before{
+      content:'';
+      position:fixed;
+      inset:0;
+      background:radial-gradient(circle at 20% 50%, rgba(99,102,241,0.15), transparent 50%),
+                 radial-gradient(circle at 80% 80%, rgba(236,72,153,0.15), transparent 50%);
+      pointer-events:none;
+      z-index:0;
     }
 
     /* header */
     header{
-      padding:28px 24px;
+      padding:20px 32px;
       display:flex;
       gap:20px;
       align-items:center;
       justify-content:space-between;
       position:sticky;
       top:0;
-      backdrop-filter: blur(6px);
-      background:var(--glass);
-      box-shadow:0 1px 0 rgba(0,0,0,0.04);
-      z-index:30;
+      backdrop-filter: blur(20px);
+      background:rgba(26,31,58,0.8);
+      border-bottom:1px solid rgba(255,255,255,0.1);
+      z-index:100;
+      animation: slideDown 0.6s ease;
+    }
+    @keyframes slideDown{
+      from{transform:translateY(-100%);opacity:0}
+      to{transform:translateY(0);opacity:1}
     }
     .brand{display:flex;gap:14px;align-items:center}
     .logo{
-      width:52px;height:52px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#2dd4bf);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:18px;box-shadow:0 6px 18px rgba(2,6,23,0.12);
+      width:56px;height:56px;border-radius:14px;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      display:flex;align-items:center;justify-content:center;
+      color:white;font-weight:800;font-size:22px;
+      box-shadow:0 8px 24px rgba(99,102,241,0.4);
+      position:relative;
+      overflow:hidden;
     }
-    h1{font-size:1.15rem;margin:0}
-    .subtitle{font-size:0.85rem;color:var(--muted)}
+    .logo::before{
+      content:'';
+      position:absolute;
+      inset:0;
+      background:linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent);
+      transform:translateX(-100%);
+      animation:shine 3s infinite;
+    }
+    @keyframes shine{
+      to{transform:translateX(100%)}
+    }
+    h1{font-size:1.2rem;margin:0;color:#fff;font-weight:700}
+    .subtitle{font-size:0.88rem;color:var(--muted)}
 
     /* nav */
-    nav{display:flex;gap:12px;align-items:center}
-    nav a{color:var(--text);text-decoration:none;padding:8px 10px;border-radius:8px;font-weight:600}
-    nav a:hover{background:rgba(0,0,0,0.04)}
+    nav{display:flex;gap:8px;align-items:center}
+    nav a{
+      color:#fff;
+      text-decoration:none;
+      padding:10px 18px;
+      border-radius:10px;
+      font-weight:600;
+      font-size:0.95rem;
+      transition:all 0.3s ease;
+      position:relative;
+    }
+    nav a::before{
+      content:'';
+      position:absolute;
+      bottom:0;
+      left:50%;
+      width:0;
+      height:2px;
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      transform:translateX(-50%);
+      transition:width 0.3s ease;
+    }
+    nav a:hover{
+      background:rgba(99,102,241,0.15);
+      color:var(--accent);
+    }
+    nav a:hover::before{width:80%}
 
     /* layout */
-    .container{max-width:1100px;margin:36px auto;padding:0 20px}
-    .grid{display:grid;gap:20px}
+    .container{max-width:1200px;margin:60px auto;padding:0 32px;position:relative;z-index:1}
+    .grid{display:grid;gap:28px}
 
     /* hero */
-    .hero{display:grid;grid-template-columns:1fr 360px;gap:28px;align-items:center}
-    .card{background:var(--card);border-radius:var(--radius);padding:20px;box-shadow:0 8px 30px rgba(2,6,23,0.06)}
-    .intro h2{margin:0 0 10px;font-size:1.6rem}
-    .intro p{color:var(--muted)}
+    .hero{display:grid;grid-template-columns:1fr 400px;gap:40px;align-items:center;margin-bottom:60px}
+    .card{
+      background:rgba(26,31,58,0.6);
+      border-radius:var(--radius);
+      padding:32px;
+      box-shadow:0 20px 60px rgba(0,0,0,0.3);
+      border:1px solid rgba(255,255,255,0.1);
+      backdrop-filter:blur(10px);
+      transition:all 0.4s ease;
+      animation:fadeInUp 0.8s ease;
+    }
+    @keyframes fadeInUp{
+      from{opacity:0;transform:translateY(30px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+    .card:hover{
+      transform:translateY(-8px);
+      box-shadow:0 30px 80px rgba(99,102,241,0.3);
+      border-color:rgba(99,102,241,0.4);
+    }
+    .intro h2{
+      margin:0 0 16px;
+      font-size:2.8rem;
+      font-weight:800;
+      background:linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+      line-height:1.2;
+    }
+    .intro p{color:var(--muted);font-size:1.1rem;line-height:1.7}
 
-    .profile-img{width:100%;border-radius:10px;object-fit:cover;height:360px}
+    .profile-img{
+      width:100%;
+      border-radius:var(--radius);
+      object-fit:cover;
+      height:400px;
+      box-shadow:0 20px 60px rgba(0,0,0,0.4);
+      border:2px solid rgba(255,255,255,0.1);
+      transition:all 0.4s ease;
+    }
+    .profile-img:hover{
+      transform:scale(1.02) rotate(1deg);
+      box-shadow:0 30px 80px rgba(99,102,241,0.4);
+    }
 
     /* skills */
-    .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-top:12px}
-    .skill{background:linear-gradient(180deg,rgba(0,0,0,0.02),transparent);padding:12px;border-radius:10px;text-align:center;font-weight:700}
+    .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;margin-top:20px}
+    .skill{
+      background:linear-gradient(135deg,rgba(99,102,241,0.1),rgba(236,72,153,0.1));
+      padding:16px 20px;
+      border-radius:12px;
+      text-align:center;
+      font-weight:700;
+      color:#fff;
+      border:1px solid rgba(255,255,255,0.1);
+      transition:all 0.3s ease;
+      cursor:pointer;
+      position:relative;
+      overflow:hidden;
+    }
+    .skill::before{
+      content:'';
+      position:absolute;
+      inset:0;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      opacity:0;
+      transition:opacity 0.3s ease;
+    }
+    .skill:hover{
+      transform:translateY(-4px) scale(1.05);
+      box-shadow:0 12px 30px rgba(99,102,241,0.4);
+      border-color:var(--accent);
+    }
+    .skill:hover::before{opacity:0.2}
+    .skill span{position:relative;z-index:1}
 
     /* projects */
-    .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
-    .project-images{display:grid;grid-template-columns:repeat(auto-fit,minmax(70px,1fr));gap:8px;margin-bottom:8px}
-    .project-images img{width:100%;height:60px;object-fit:cover;border-radius:6px}
-    .project-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
-    .project-links a{padding:6px 10px;border-radius:8px;background:rgba(0,0,0,0.06);text-decoration:none;color:var(--text);font-size:0.85rem;font-weight:600}
-    .project{
-      position:relative;overflow:hidden;border-radius:12px;
-      min-height:170px;background:linear-gradient(180deg, rgba(0,0,0,0.02), transparent);
-      display:flex;flex-direction:column;justify-content:flex-end;padding:14px;cursor:pointer;
-      transition:transform .28s ease, box-shadow .28s ease
+    .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:28px;margin-top:28px}
+    .project-images{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+    .project-images img{
+      width:100%;
+      height:80px;
+      object-fit:cover;
+      border-radius:8px;
+      border:1px solid rgba(255,255,255,0.1);
+      transition:all 0.3s ease;
+      cursor:pointer;
     }
-    .project:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(2,6,23,0.12)}
-    .project .meta{backdrop-filter: blur(6px);background:rgba(255,255,255,0.5);padding:10px;border-radius:8px}
-    .project img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.55);}
-    .project h3{margin:0 0 6px}
-    .project p{margin:0;font-size:0.9rem;color:var(--muted)}
+    .project-images img:hover{
+      transform:scale(1.1) rotate(2deg);
+      box-shadow:0 8px 20px rgba(99,102,241,0.4);
+      z-index:2;
+    }
+    .project-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+    .project-links a{
+      padding:8px 16px;
+      border-radius:10px;
+      background:linear-gradient(135deg,rgba(99,102,241,0.2),rgba(236,72,153,0.2));
+      border:1px solid rgba(255,255,255,0.1);
+      text-decoration:none;
+      color:#fff;
+      font-size:0.9rem;
+      font-weight:600;
+      transition:all 0.3s ease;
+    }
+    .project-links a:hover{
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      transform:translateY(-2px);
+      box-shadow:0 6px 20px rgba(99,102,241,0.4);
+    }
+    .project{
+      background:rgba(26,31,58,0.6);
+      border-radius:var(--radius);
+      padding:28px;
+      border:1px solid rgba(255,255,255,0.1);
+      backdrop-filter:blur(10px);
+      transition:all 0.4s ease;
+      cursor:pointer;
+      position:relative;
+      overflow:hidden;
+    }
+    .project::before{
+      content:'';
+      position:absolute;
+      top:0;
+      left:-100%;
+      width:100%;
+      height:100%;
+      background:linear-gradient(90deg, transparent, rgba(99,102,241,0.1), transparent);
+      transition:left 0.6s ease;
+    }
+    .project:hover::before{left:100%}
+    .project:hover{
+      transform:translateY(-10px);
+      box-shadow:0 20px 60px rgba(99,102,241,0.4);
+      border-color:rgba(99,102,241,0.5);
+    }
+    .project h3{
+      margin:0 0 12px;
+      font-size:1.5rem;
+      color:#fff;
+      font-weight:700;
+    }
+    .project p{margin:0 0 16px;font-size:1rem;color:var(--muted);line-height:1.6}
 
     /* modal */
     .modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(2,6,23,0.6);opacity:0;pointer-events:none;transition:opacity .2s ease}
@@ -279,18 +455,60 @@
     </div>
 
     <section id="veille" class="card" style="margin-top:20px">
-      <h2>Veille technologique</h2>
-      <p style="color:var(--muted)">Thèmes suivis en développement web avec sources et ressources.</p>
-      <ul style="color:var(--muted)">
-        <li>Évolution JavaScript (ES6+, frameworks)</li>
-        <li>Tendances UI/UX & accessibilité</li>
-        <li>Performance & SEO</li>
-        <li>Sécurité web (OWASP)</li>
-      </ul>
-      <div class="project-links">
-        <a href="#">Article</a>
-        <a href="#">Vidéo</a>
-        <a href="#">Outil</a>
+      <h2>🤖 Veille technologique : IA et Monde du Travail</h2>
+      <p style="color:var(--muted);margin-bottom:15px">Analyse des problématiques liées à l'intelligence artificielle et son impact sur le monde professionnel.</p>
+      
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:15px;margin-bottom:20px">
+        <div style="padding:15px;background:rgba(102,126,234,0.05);border-left:3px solid #667eea;border-radius:6px">
+          <h4 style="color:#667eea;margin-bottom:8px">📊 Automatisation des Métiers</h4>
+          <p style="color:var(--muted);font-size:0.9em">Impact de l'automatisation sur l'emploi et les secteurs les plus touchés (manufacturing, customer service, data entry).</p>
+        </div>
+        
+        <div style="padding:15px;background:rgba(102,126,234,0.05);border-left:3px solid #667eea;border-radius:6px">
+          <h4 style="color:#667eea;margin-bottom:8px">🎓 Reskilling & Upskilling</h4>
+          <p style="color:var(--muted);font-size:0.9em">Formation continue pour adapter les compétences : data science, cybersécurité, intelligence émotionnelle.</p>
+        </div>
+        
+        <div style="padding:15px;background:rgba(102,126,234,0.05);border-left:3px solid #667eea;border-radius:6px">
+          <h4 style="color:#667eea;margin-bottom:8px">⚖️ Éthique & Biais de l'IA</h4>
+          <p style="color:var(--muted);font-size:0.9em">Biais algorithmiques et discriminations dans le recrutement, évaluation de performance et gestion RH.</p>
+        </div>
+        
+        <div style="padding:15px;background:rgba(102,126,234,0.05);border-left:3px solid #667eea;border-radius:6px">
+          <h4 style="color:#667eea;margin-bottom:8px">💡 IA Générative & Créativité</h4>
+          <p style="color:var(--muted);font-size:0.9em">ChatGPT et modèles de langage transforment les métiers créatifs (rédaction, design, développement, marketing).</p>
+        </div>
+        
+        <div style="padding:15px;background:rgba(102,126,234,0.05);border-left:3px solid #667eea;border-radius:6px">
+          <h4 style="color:#667eea;margin-bottom:8px">📜 Régulation & Gouvernance</h4>
+          <p style="color:var(--muted);font-size:0.9em">AI Act européenne, cadres légaux et standards de conformité pour les entreprises.</p>
+        </div>
+        
+        <div style="padding:15px;background:rgba(102,126,234,0.05);border-left:3px solid #667eea;border-radius:6px">
+          <h4 style="color:#667eea;margin-bottom:8px">🤝 Collaboration Homme-Machine</h4>
+          <p style="color:var(--muted);font-size:0.9em">Nouveaux métiers émergents : prompt engineer, AI trainer, AI ethicist, MLOps.</p>
+        </div>
+      </div>
+      
+      <div style="background:rgba(255,193,7,0.08);padding:15px;border-radius:8px;margin-bottom:15px">
+        <h4 style="margin-bottom:10px">⚠️ Problématiques principales identifiées</h4>
+        <ul style="color:var(--muted);margin-left:20px;line-height:1.8">
+          <li><strong>Déplacement d'emploi</strong> — Gap entre compétences actuelles et futures</li>
+          <li><strong>Inégalités croissantes</strong> — Élargissement du fossé économique</li>
+          <li><strong>Surveillance au travail</strong> — Risques de burnout et perte d'autonomie</li>
+          <li><strong>Manque de transparence</strong> — Décisions automatisées contestables</li>
+          <li><strong>Propriété intellectuelle</strong> — Questions sur les contenus générés par IA</li>
+          <li><strong>Cybersécurité</strong> — Protection des données personnelles</li>
+        </ul>
+      </div>
+      
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <span style="color:var(--muted);font-size:0.9em"><strong>Statistiques clés :</strong> 37% des emplois concernés d'ici 2030 • 78% des entreprises adoptent l'IA • 62% des salariés inquiets</span>
+      </div>
+      
+      <div class="project-links" style="margin-top:15px">
+        <a href="veille_ia_travail.html" target="_blank">Voir la veille complète</a>
+        <a href="#" target="_blank">Sources & Articles</a>
       </div>
     </section>
 
