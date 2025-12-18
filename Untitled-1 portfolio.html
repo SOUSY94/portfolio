@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portfolio Ouraga</title>
+  <style>
+    :root{
+      --bg: #f4f4f4;
+      --card:#ffffff;
+      --text:#111;
+      --muted:#6b7280;
+      --accent:#0077cc;
+      --glass: rgba(255,255,255,0.6);
+      --radius:12px;
+    }
+    .dark{
+      --bg:#0b0f14;
+      --card: #0f1720;
+      --text:#e6eef6;
+      --muted:#98a2b3;
+      --accent:#1ea7ff;
+      --glass: rgba(255,255,255,0.03);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;}
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      background:linear-gradient(180deg,var(--bg), #e9eef6 120%);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+      transition:background .3s ease, color .3s ease;
+    }
+
+    /* header */
+    header{
+      padding:28px 24px;
+      display:flex;
+      gap:20px;
+      align-items:center;
+      justify-content:space-between;
+      position:sticky;
+      top:0;
+      backdrop-filter: blur(6px);
+      background:var(--glass);
+      box-shadow:0 1px 0 rgba(0,0,0,0.04);
+      z-index:30;
+    }
+    .brand{display:flex;gap:14px;align-items:center}
+    .logo{
+      width:52px;height:52px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#2dd4bf);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:18px;box-shadow:0 6px 18px rgba(2,6,23,0.12);
+    }
+    h1{font-size:1.15rem;margin:0}
+    .subtitle{font-size:0.85rem;color:var(--muted)}
+
+    /* nav */
+    nav{display:flex;gap:12px;align-items:center}
+    nav a{color:var(--text);text-decoration:none;padding:8px 10px;border-radius:8px;font-weight:600}
+    nav a:hover{background:rgba(0,0,0,0.04)}
+
+    /* layout */
+    .container{max-width:1100px;margin:36px auto;padding:0 20px}
+    .grid{display:grid;gap:20px}
+
+    /* hero */
+    .hero{display:grid;grid-template-columns:1fr 360px;gap:28px;align-items:center}
+    .card{background:var(--card);border-radius:var(--radius);padding:20px;box-shadow:0 8px 30px rgba(2,6,23,0.06)}
+    .intro h2{margin:0 0 10px;font-size:1.6rem}
+    .intro p{color:var(--muted)}
+
+    .profile-img{width:100%;border-radius:10px;object-fit:cover;height:360px}
+
+    /* skills */
+    .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-top:12px}
+    .skill{background:linear-gradient(180deg,rgba(0,0,0,0.02),transparent);padding:12px;border-radius:10px;text-align:center;font-weight:700}
+
+    /* projects */
+    .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+    .project-images{display:grid;grid-template-columns:repeat(auto-fit,minmax(70px,1fr));gap:8px;margin-bottom:8px}
+    .project-images img{width:100%;height:60px;object-fit:cover;border-radius:6px}
+    .project-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+    .project-links a{padding:6px 10px;border-radius:8px;background:rgba(0,0,0,0.06);text-decoration:none;color:var(--text);font-size:0.85rem;font-weight:600}
+    .project{
+      position:relative;overflow:hidden;border-radius:12px;
+      min-height:170px;background:linear-gradient(180deg, rgba(0,0,0,0.02), transparent);
+      display:flex;flex-direction:column;justify-content:flex-end;padding:14px;cursor:pointer;
+      transition:transform .28s ease, box-shadow .28s ease
+    }
+    .project:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(2,6,23,0.12)}
+    .project .meta{backdrop-filter: blur(6px);background:rgba(255,255,255,0.5);padding:10px;border-radius:8px}
+    .project img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.55);}
+    .project h3{margin:0 0 6px}
+    .project p{margin:0;font-size:0.9rem;color:var(--muted)}
+
+    /* modal */
+    .modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(2,6,23,0.6);opacity:0;pointer-events:none;transition:opacity .2s ease}
+    .modal.open{opacity:1;pointer-events:auto}
+    .modal .dialog{width:min(900px,96%);max-height:86vh;overflow:auto;border-radius:12px;background:var(--card);padding:18px}
+    .modal .dialog img{max-width:100%;border-radius:8px}
+
+    /* contact */
+    .contact-form{display:grid;gap:12px}
+    input,textarea{padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.08);background:transparent;color:var(--text)}
+    button.primary{background:var(--accent);color:white;padding:10px 14px;border-radius:10px;border:0;font-weight:700;cursor:pointer}
+
+    footer{text-align:center;padding:28px 12px;color:var(--muted)}
+
+    /* responsive */
+    @media (max-width:900px){
+      .hero{grid-template-columns:1fr}
+      nav{display:none}
+      header{gap:12px}
+    }
+
+  
+    /* lightbox */
+    .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;z-index:100}
+    .lightbox.open{display:flex}
+    .lightbox img{max-width:92%;max-height:92%;border-radius:12px;box-shadow:0 30px 80px rgba(0,0,0,.4)}
+    .lb-close{position:absolute;top:18px;right:18px;background:#fff;border:0;border-radius:10px;padding:8px 10px;font-weight:700;cursor:pointer}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo">O</div>
+      <div>
+        <h1>Portfolio Ouraga</h1>
+        <div class="subtitle">Étudiant BTS SIO — 2 années de projets</div>
+      </div>
+    </div>
+
+    <nav>
+      <a href="#about">À propos</a>
+      <a href="#skills">Compétences</a>
+      <a href="#projects">Projets</a>
+      <a href="#contact">Contact</a>
+      <a href="cv.pdf" download style="margin-left:8px;">Télécharger CV</a>
+      <button id="themeBtn" aria-label="Changer thème" style="margin-left:8px;padding:8px;border-radius:8px;border:0;cursor:pointer">Thème</button>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section id="about" class="grid hero">
+      <div class="card intro">
+        <h2>Salut, moi c'est Ouraga 👋</h2>
+        <p>Je suis étudiant en BTS Services Informatiques aux Organisations (SIO). Pendant mes deux années, j'ai réalisé plusieurs projets en développement web, administration réseau et sécurité. Ce portfolio regroupe mes réalisations, compétences et contacts.</p>
+
+        <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap">
+          <a href="#projects" class="primary-link" style="text-decoration:none;padding:10px 12px;background:var(--accent);color:#fff;border-radius:8px;font-weight:700">Voir mes projets</a>
+          <a href="#contact" style="text-decoration:none;padding:10px 12px;border-radius:8px;border:1px solid rgba(0,0,0,0.06)">Me contacter</a>
+        </div>
+
+        <div style="margin-top:18px">
+          <h3 style="margin-bottom:8px">Compétences clés</h3>
+          <div class="skills-grid">
+            <div class="skill">HTML & CSS</div>
+            <div class="skill">JavaScript</div>
+            <div class="skill">PHP & MySQL</div>
+            <div class="skill">Administration Réseau</div>
+            <div class="skill">Sécurité</div>
+            <div class="skill">Git</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <img src="profile.jpg" alt="Photo profil" class="profile-img" onerror="this.style.opacity=0.6;this.src='';this.alt='Photo de profil (à ajouter)';">
+        <p style="margin-top:10px;color:var(--muted);font-size:0.9rem">Ajoute ta photo nommée <strong>profile.jpg</strong> dans le même dossier que ce fichier pour l'afficher.</p>
+      </div>
+    </section>
+
+    <section id="skills" class="card" style="margin-top:20px">
+      <h2>Compétences détaillées</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px">
+        <div>
+          <h4>Frontend</h4>
+          <ul style="color:var(--muted)">
+            <li>HTML5, CSS3 (Flexbox, Grid)</li>
+            <li>JavaScript (ES6+), DOM</li>
+            <li>Responsive design</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Backend / DB</h4>
+          <ul style="color:var(--muted)">
+            <li>PHP, MySQL</li>
+            <li>APIs simples, CRUD</li>
+            <li>Gestion utilisateurs</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Réseau & Sys</h4>
+          <ul style="color:var(--muted)">
+            <li>Configuration de base d'un réseau</li>
+            <li>Administration Linux de base</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Sécurité</h4>
+          <ul style="color:var(--muted)">
+            <li>Bonnes pratiques, gestion des mots de passe</li>
+            <li>Analyse de vulnérabilités basique</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" style="margin-top:20px">
+  <h2 style="margin-bottom:12px">Projets (Développement Web)</h2>
+
+  <!-- 🔹 MODE D’EMPLOI 🔹
+  1) Pour ajouter une image : duplique une ligne <img>
+  2) Pour ajouter un lien : duplique une ligne <a>
+  3) Remplace simplement les textes et liens
+  -->
+
+  <div class="projects-grid">
+
+    <!-- PROJET 1 : SITE VITRINE -->
+    <article class="project card">
+      <h3>Site vitrine</h3>
+      <p>Site web professionnel réalisé en HTML / CSS, responsive.</p>
+
+      <div class="project-links">
+        <a href="C:\Users\HP\Downloads\Untitled-8 (1).html" target="_blank">Voir le site vitrine</a>
+        <a href="#" target="_blank">GitHub</a>
+      </div>
+    </article>
+
+    <!-- PROJET 2 : JEU JAVASCRIPT -->
+    <article class="project card">
+      <h3>Jeu JavaScript</h3>
+      <p>Jeu 2D interactif développé en JavaScript.</p>
+
+      <div class="project-images">
+        <img src="jeu1.jpg" alt="Jeu écran 1">
+        <img src="jeu2.jpg" alt="Jeu écran 2">
+        <img src="jeu3.jpg" alt="Jeu écran 3">
+      </div>
+
+      <div class="project-links">
+        <a href="https://ton-jeu-js.netlify.app" target="_blank">Jouer au jeu</a>
+        <a href="https://github.com/tongithub/jeu-js" target="_blank">GitHub</a>
+      </div>
+    </article>
+
+    <!-- PROJET 3 : PROJET WEB BTS -->
+    <article class="project card">
+      <h3>Projet Web BTS</h3>
+      <p>Projet réalisé durant le BTS SIO (formulaires, pages dynamiques).</p>
+
+      <div class="project-images">
+        <img src="web1.jpg" alt="Projet web 1">
+        <img src="web2.jpg" alt="Projet web 2">
+        <img src="web3.jpg" alt="Projet web 3">
+      </div>
+
+      <div class="project-links">
+        <a href="https://github.com/tongithub/projet-web-bts" target="_blank">GitHub</a>
+        <a href="#">Documentation</a>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+    <!-- Modal projet -->
+    <div id="modal" class="modal" aria-hidden="true">
+      <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <button id="closeModal" style="float:right;border:0;background:transparent;font-weight:700;cursor:pointer">✕</button>
+        <h3 id="modalTitle"></h3>
+        <img id="modalImg" src="" alt="" style="margin-top:8px;">
+        <p id="modalDesc" style="margin-top:10px;color:var(--muted)"></p>
+      </div>
+    </div>
+
+    <section id="veille" class="card" style="margin-top:20px">
+      <h2>Veille technologique</h2>
+      <p style="color:var(--muted)">Thèmes suivis en développement web avec sources et ressources.</p>
+      <ul style="color:var(--muted)">
+        <li>Évolution JavaScript (ES6+, frameworks)</li>
+        <li>Tendances UI/UX & accessibilité</li>
+        <li>Performance & SEO</li>
+        <li>Sécurité web (OWASP)</li>
+      </ul>
+      <div class="project-links">
+        <a href="#">Article</a>
+        <a href="#">Vidéo</a>
+        <a href="#">Outil</a>
+      </div>
+    </section>
+
+    <section id="experience" class="card" style="margin-top:20px">
+      <h2>Stages & Expériences</h2>
+      <ul style="color:var(--muted)">
+        <li><strong>Stage BTS SIO</strong> — Développement de pages web, maintenance, intégration responsive</li>
+        <li><strong>Projet personnel</strong> — Création de sites vitrines et mini‑jeux JS</li>
+      </ul>
+    </section>
+
+    <section id="bts" class="card" style="margin-top:20px">
+      <h2>Compétences évaluées – BTS SIO</h2>
+      <ul style="color:var(--muted)">
+        <li>Développement d’applications web</li>
+        <li>Gestion de projets</li>
+        <li>Analyse des besoins clients</li>
+        <li>Maintenance et évolution d’un site</li>
+        <li>Veille technologique</li>
+      </ul>
+    </section>
+
+    <section id="contact" class="card" style="margin-top:20px">
+      <h2>Contact</h2>
+      <p style="color:var(--muted)">Tu peux me contacter via email ou LinkedIn. Le formulaire ci-dessous envoie un mail (side-effect : ouvre le client mail).</p>
+      <form class="contact-form" onsubmit="event.preventDefault();window.location='mailto:votremail@example.com?subject=Contact depuis portfolio Ouraga&body='+encodeURIComponent(document.getElementById('msg').value)">
+        <input placeholder="Ton nom" required>
+        <input type="email" placeholder="Ton email" required>
+        <textarea id="msg" rows="5" placeholder="Ton message" required></textarea>
+        <div style="display:flex;gap:10px;align-items:center">
+          <button class="primary" type="submit">Envoyer</button>
+          <a href="mailto:votremail@example.com" style="padding:10px 12px;border-radius:8px;border:1px solid rgba(0,0,0,0.06);text-decoration:none;color:var(--text)">Me mailer</a>
+        </div>
+      </form>
+    </section>
+
+  </main>
+
+  <footer>
+    <div>© <span id="year"></span> Portfolio Ouraga — BTS SIO</div>
+  </footer>
+
+  <script>
+    // année automatique
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // thème (stockage local)
+    const themeBtn = document.getElementById('themeBtn');
+    const body = document.body;
+    const saved = localStorage.getItem('ouraga-theme');
+    if(saved === 'dark') body.classList.add('dark');
+    themeBtn.addEventListener('click', ()=>{
+      body.classList.toggle('dark');
+      localStorage.setItem('ouraga-theme', body.classList.contains('dark') ? 'dark' : 'light');
+    });
+
+    // ouverture modal projet
+    const projects = document.querySelectorAll('.project');
+    const modal = document.getElementById('modal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalImg = document.getElementById('modalImg');
+    const modalDesc = document.getElementById('modalDesc');
+    const closeModal = document.getElementById('closeModal');
+
+    projects.forEach(p => {
+      p.addEventListener('click', ()=>{
+        const title = p.dataset.title || 'Projet';
+        const desc = p.dataset.desc || '';
+        const img = p.dataset.img || '';
+        modalTitle.textContent = title;
+        modalDesc.textContent = desc;
+        if(img){ modalImg.src = img; modalImg.style.display = 'block'; modalImg.alt = title; }
+        else { modalImg.style.display = 'none'; }
+        modal.classList.add('open');
+        modal.setAttribute('aria-hidden','false');
+      });
+    });
+    closeModal.addEventListener('click', ()=>{ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); });
+    modal.addEventListener('click', (e)=>{ if(e.target===modal) { modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); }});
+
+    // accessibility: close modal with ESC
+    document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') { modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); }});
+
+    // smooth scroll for internal links
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', (e)=>{
+        const href = a.getAttribute('href');
+        if(href.length>1){
+          e.preventDefault();
+          document.querySelector(href).scrollIntoView({behavior:'smooth', block:'start'});
+        }
+      });
+    });
+  </script>
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox" aria-hidden="true">
+    <button class="lb-close" id="lbClose">✕</button>
+    <img id="lbImg" src="" alt="Aperçu">
+  </div>
+
+  <script>
+    // lightbox images
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lbImg');
+    const lbClose = document.getElementById('lbClose');
+    document.querySelectorAll('.project-images img').forEach(img=>{
+      img.addEventListener('click', ()=>{
+        lbImg.src = img.src;
+        lb.classList.add('open');
+        lb.setAttribute('aria-hidden','false');
+      });
+    });
+    lbClose.addEventListener('click', ()=>{ lb.classList.remove('open'); lb.setAttribute('aria-hidden','true'); });
+    lb.addEventListener('click', (e)=>{ if(e.target===lb){ lb.classList.remove('open'); lb.setAttribute('aria-hidden','true'); }});
+  </script>
+</body>
+</html>
