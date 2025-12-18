@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portfolio Ouraga</title>
+  <style>
+    :root{
+      --bg: #0a0e27;
+      --card:#ffffff;
+      --text:#111;
+      --muted:#6b7280;
+      --accent:#6366f1;
+      --accent-2:#ec4899;
+      --glass: rgba(255,255,255,0.7);
+      --radius:16px;
+    }
+    .dark{
+      --bg:#0a0e27;
+      --card: #1a1f3a;
+      --text:#e6eef6;
+      --muted:#98a2b3;
+      --accent:#818cf8;
+      --accent-2:#f472b6;
+      --glass: rgba(255,255,255,0.05);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    html,body{height:100%;}
+    body{
+      margin:0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background:linear-gradient(135deg, var(--bg) 0%, #1a1f3a 50%, #2d1b4e 100%);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.6;
+      transition:background .3s ease, color .3s ease;
+      overflow-x:hidden;
+    }
+    body::before{
+      content:'';
+      position:fixed;
+      inset:0;
+      background:radial-gradient(circle at 20% 50%, rgba(99,102,241,0.15), transparent 50%),
+                 radial-gradient(circle at 80% 80%, rgba(236,72,153,0.15), transparent 50%);
+      pointer-events:none;
+      z-index:0;
+    }
+
+    /* header */
+    header{
+      padding:20px 32px;
+      display:flex;
+      gap:20px;
+      align-items:center;
+      justify-content:space-between;
+      position:sticky;
+      top:0;
+      backdrop-filter: blur(20px);
+      background:rgba(26,31,58,0.8);
+      border-bottom:1px solid rgba(255,255,255,0.1);
+      z-index:100;
+      animation: slideDown 0.6s ease;
+    }
+    @keyframes slideDown{
+      from{transform:translateY(-100%);opacity:0}
+      to{transform:translateY(0);opacity:1}
+    }
+    .brand{display:flex;gap:14px;align-items:center}
+    .logo{
+      width:56px;height:56px;border-radius:14px;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      display:flex;align-items:center;justify-content:center;
+      color:white;font-weight:800;font-size:22px;
+      box-shadow:0 8px 24px rgba(99,102,241,0.4);
+      position:relative;
+      overflow:hidden;
+    }
+    .logo::before{
+      content:'';
+      position:absolute;
+      inset:0;
+      background:linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent);
+      transform:translateX(-100%);
+      animation:shine 3s infinite;
+    }
+    @keyframes shine{
+      to{transform:translateX(100%)}
+    }
+    h1{font-size:1.2rem;margin:0;color:#fff;font-weight:700}
+    .subtitle{font-size:0.88rem;color:var(--muted)}
+
+    /* nav */
+    nav{display:flex;gap:8px;align-items:center}
+    nav a{
+      color:#fff;
+      text-decoration:none;
+      padding:10px 18px;
+      border-radius:10px;
+      font-weight:600;
+      font-size:0.95rem;
+      transition:all 0.3s ease;
+      position:relative;
+    }
+    nav a::before{
+      content:'';
+      position:absolute;
+      bottom:0;
+      left:50%;
+      width:0;
+      height:2px;
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      transform:translateX(-50%);
+      transition:width 0.3s ease;
+    }
+    nav a:hover{
+      background:rgba(99,102,241,0.15);
+      color:var(--accent);
+    }
+    nav a:hover::before{width:80%}
+
+    /* layout */
+    .container{max-width:1200px;margin:60px auto;padding:0 32px;position:relative;z-index:1}
+    .grid{display:grid;gap:28px}
+
+    /* hero */
+    .hero{display:grid;grid-template-columns:1fr 400px;gap:40px;align-items:center;margin-bottom:60px}
+    .card{
+      background:rgba(26,31,58,0.6);
+      border-radius:var(--radius);
+      padding:32px;
+      box-shadow:0 20px 60px rgba(0,0,0,0.3);
+      border:1px solid rgba(255,255,255,0.1);
+      backdrop-filter:blur(10px);
+      transition:all 0.4s ease;
+      animation:fadeInUp 0.8s ease;
+    }
+    @keyframes fadeInUp{
+      from{opacity:0;transform:translateY(30px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+    .card:hover{
+      transform:translateY(-8px);
+      box-shadow:0 30px 80px rgba(99,102,241,0.3);
+      border-color:rgba(99,102,241,0.4);
+    }
+    .intro h2{
+      margin:0 0 16px;
+      font-size:2.8rem;
+      font-weight:800;
+      background:linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+      line-height:1.2;
+    }
+    .intro p{color:var(--muted);font-size:1.1rem;line-height:1.7}
+
+    .profile-img{
+      width:100%;
+      border-radius:var(--radius);
+      object-fit:cover;
+      height:400px;
+      box-shadow:0 20px 60px rgba(0,0,0,0.4);
+      border:2px solid rgba(255,255,255,0.1);
+      transition:all 0.4s ease;
+    }
+    .profile-img:hover{
+      transform:scale(1.02) rotate(1deg);
+      box-shadow:0 30px 80px rgba(99,102,241,0.4);
+    }
+
+    /* skills */
+    .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;margin-top:20px}
+    .skill{
+      background:linear-gradient(135deg,rgba(99,102,241,0.1),rgba(236,72,153,0.1));
+      padding:16px 20px;
+      border-radius:12px;
+      text-align:center;
+      font-weight:700;
+      color:#fff;
+      border:1px solid rgba(255,255,255,0.1);
+      transition:all 0.3s ease;
+      cursor:pointer;
+      position:relative;
+      overflow:hidden;
+    }
+    .skill::before{
+      content:'';
+      position:absolute;
+      inset:0;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      opacity:0;
+      transition:opacity 0.3s ease;
+    }
+    .skill:hover{
+      transform:translateY(-4px) scale(1.05);
+      box-shadow:0 12px 30px rgba(99,102,241,0.4);
+      border-color:var(--accent);
+    }
+    .skill:hover::before{opacity:0.2}
+    .skill span{position:relative;z-index:1}
+
+    /* projects */
+    .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:28px;margin-top:28px}
+    .project-images{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+    .project-images img{
+      width:100%;
+      height:80px;
+      object-fit:cover;
+      border-radius:8px;
+      border:1px solid rgba(255,255,255,0.1);
+      transition:all 0.3s ease;
+      cursor:pointer;
+    }
+    .project-images img:hover{
+      transform:scale(1.1) rotate(2deg);
+      box-shadow:0 8px 20px rgba(99,102,241,0.4);
+      z-index:2;
+    }
+    .project-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+    .project-links a{
+      padding:8px 16px;
+      border-radius:10px;
+      background:linear-gradient(135deg,rgba(99,102,241,0.2),rgba(236,72,153,0.2));
+      border:1px solid rgba(255,255,255,0.1);
+      text-decoration:none;
+      color:#fff;
+      font-size:0.9rem;
+      font-weight:600;
+      transition:all 0.3s ease;
+    }
+    .project-links a:hover{
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      transform:translateY(-2px);
+      box-shadow:0 6px 20px rgba(99,102,241,0.4);
+    }
+    .project{
+      background:rgba(26,31,58,0.6);
+      border-radius:var(--radius);
+      padding:28px;
+      border:1px solid rgba(255,255,255,0.1);
+      backdrop-filter:blur(10px);
+      transition:all 0.4s ease;
+      cursor:pointer;
+      position:relative;
+      overflow:hidden;
+    }
+    .project::before{
+      content:'';
+      position:absolute;
+      top:0;
+      left:-100%;
+      width:100%;
+      height:100%;
+      background:linear-gradient(90deg, transparent, rgba(99,102,241,0.1), transparent);
+      transition:left 0.6s ease;
+    }
+    .project:hover::before{left:100%}
+    .project:hover{
+      transform:translateY(-10px);
+      box-shadow:0 20px 60px rgba(99,102,241,0.4);
+      border-color:rgba(99,102,241,0.5);
+    }
+    .project h3{
+      margin:0 0 12px;
+      font-size:1.5rem;
+      color:#fff;
+      font-weight:700;
+    }
+    .project p{margin:0 0 16px;font-size:1rem;color:var(--muted);line-height:1.6}
+
+    /* modal */
+    .modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(2,6,23,0.6);opacity:0;pointer-events:none;transition:opacity .2s ease}
+    .modal.open{opacity:1;pointer-events:auto}
+    .modal .dialog{width:min(900px,96%);max-height:86vh;overflow:auto;border-radius:12px;background:var(--card);padding:18px}
+    .modal .dialog img{max-width:100%;border-radius:8px}
+
+    /* contact */
+    .contact-form{display:grid;gap:12px}
+    input,textarea{padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.08);background:transparent;color:var(--text)}
+    button.primary{background:var(--accent);color:white;padding:10px 14px;border-radius:10px;border:0;font-weight:700;cursor:pointer}
+
+    footer{text-align:center;padding:28px 12px;color:var(--muted)}
+
+    /* responsive */
+    @media (max-width:900px){
+      .hero{grid-template-columns:1fr}
+      nav{display:none}
+      header{gap:12px}
+    }
+
+  
+    /* lightbox */
+    .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;z-index:100}
+    .lightbox.open{display:flex}
+    .lightbox img{max-width:92%;max-height:92%;border-radius:12px;box-shadow:0 30px 80px rgba(0,0,0,.4)}
+    .lb-close{position:absolute;top:18px;right:18px;background:#fff;border:0;border-radius:10px;padding:8px 10px;font-weight:700;cursor:pointer}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo">O</div>
+      <div>
+        <h1>Portfolio Ouraga</h1>
+        <div class="subtitle">Étudiant BTS SIO — 2 années de projets</div>
+      </div>
+    </div>
+
+    <nav>
+      <a href="#about">À propos</a>
+      <a href="#skills">Compétences</a>
+      <a href="#projects">Projets</a>
+      <a href="#contact">Contact</a>
+      <a href="C:\Users\HP\Downloads\CV professionnel noir simple (2).pdf" download style="margin-left:8px;">Télécharger CV</a>
+      <button id="themeBtn" aria-label="Changer thème" style="margin-left:8px;padding:8px;border-radius:8px;border:0;cursor:pointer">Thème</button>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section id="about" class="grid hero">
+      <div class="card intro">
+        <h2>bonjour moi c'est Ouraga 👋</h2>
+        <p>Je suis étudiant en BTS Services Informatiques aux Organisations (SIO). Pendant mes deux années, j'ai réalisé plusieurs projets en développement web, administration réseau et sécurité. Ce portfolio regroupe mes réalisations, compétences et contacts.</p>
+
+        <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap">
+          <a href="#projects" class="primary-link" style="text-decoration:none;padding:10px 12px;background:var(--accent);color:#fff;border-radius:8px;font-weight:700">Voir mes projets</a>
+          <a href="#contact" style="text-decoration:none;padding:10px 12px;border-radius:8px;border:1px solid rgba(0,0,0,0.06)">Me contacter</a>
+        </div>
+
+        <div style="margin-top:18px">
+          <h3 style="margin-bottom:8px">Compétences clés</h3>
+          <div class="skills-grid">
+            <div class="skill">HTML & CSS</div>
+            <div class="skill">JavaScript</div>
+            <div class="skill">PHP & MySQL</div>
+            <div class="skill">Administration Réseau</div>
+            <div class="skill">Sécurité</div>
+            <div class="skill">Git</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <img src="profile.jpg" alt="Photo profil" class="profile-img" onerror="this.style.opacity=0.6;this.src='';this.alt='Photo de profil (à ajouter)';">
+        <p style="margin-top:10px;color:var(--muted);font-size:0.9rem">Ajoute ta photo nommée <strong>profile.jpg</strong> dans le même dossier que ce fichier pour l'afficher.</p>
+      </div>
+    </section>
+
+    <section id="skills" class="card" style="margin-top:20px">
+      <h2>Compétences détaillées</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px">
+        <div>
+          <h4>Frontend</h4>
+          <ul style="color:var(--muted)">
+            <li>HTML5, CSS3 (Flexbox, Grid)</li>
+            <li>JavaScript (ES6+), DOM</li>
+            <li>Responsive design</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Backend / DB</h4>
+          <ul style="color:var(--muted)">
+            <li>PHP, MySQL</li>
+            <li>APIs simples, CRUD</li>
+            <li>Gestion utilisateurs</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Réseau & Sys</h4>
+          <ul style="color:var(--muted)">
+            <li>Configuration de base d'un réseau</li>
+            <li>Administration Linux de base</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Sécurité</h4>
+          <ul style="color:var(--muted)">
+            <li>Bonnes pratiques, gestion des mots de passe</li>
+            <li>Analyse de vulnérabilités basique</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" style="margin-top:20px">
+  <h2 style="margin-bottom:12px">Projets (Développement Web)</h2>
+
+  <!-- 🔹 MODE D’EMPLOI 🔹
+  1) Pour ajouter une image : duplique une ligne <img>
+  2) Pour ajouter un lien : duplique une ligne <a>
+  3) Remplace simplement les textes et liens
+  -->
+
+  <div class="projects-grid">
+
+    <!-- PROJET 1 : SITE VITRINE -->
+    <article class="project card">
+      <h3>Site vitrine</h3>
+      <p>Site web professionnel réalisé en HTML / CSS, responsive.</p>
+
+      <div class="project-links">
+        <a href="C:\Users\HP\Downloads\Untitled-8 (1).html" target="_blank">Voir le site vitrine</a>
+        <a href="#" target="_blank">GitHub</a>
+      </div>
+    </article>
+
+    <!-- PROJET 2 : JEU JAVASCRIPT -->
+    <article class="project card">
+      <h3>Jeu JavaScript</h3>
+      <p>Jeu 2D interactif développé en JavaScript.</p>
+
+      <div class="project-images">
+        <img src="jeu1.jpg" alt="Jeu écran 1">
+        <img src="jeu2.jpg" alt="Jeu écran 2">
+        <img src="jeu3.jpg" alt="Jeu écran 3">
+      </div>
+
+      <div class="project-links">
+        <a href="https://ton-jeu-js.netlify.app" target="_blank">Jouer au jeu</a>
+        <a href="https://github.com/tongithub/jeu-js" target="_blank">GitHub</a>
+      </div>
+    </article>
+
+    <!-- PROJET 3 : PROJET WEB BTS -->
+    <article class="project card">
+      <h3>Projet Web BTS</h3>
+      <p>Projet réalisé durant le BTS SIO (formulaires, pages dynamiques).</p>
+
+      <div class="project-images">
+        <img src="web1.jpg" alt="Projet web 1">
+        <img src="web2.jpg" alt="Projet web 2">
+        <img src="web3.jpg" alt="Projet web 3">
+      </div>
+
+      <div class="project-links">
+        <a href="https://github.com/tongithub/projet-web-bts" target="_blank">GitHub</a>
+        <a href="#">Documentation</a>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+    <!-- Modal projet -->
+    <div id="modal" class="modal" aria-hidden="true">
+      <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <button id="closeModal" style="float:right;border:0;background:transparent;font-weight:700;cursor:pointer">✕</button>
+        <h3 id="modalTitle"></h3>
+        <img id="modalImg" src="" alt="" style="margin-top:8px;">
+        <p id="modalDesc" style="margin-top:10px;color:var(--muted)"></p>
+      </div>
+    </div>
+
+    <section id="veille" class="card" style="margin-top:20px">
+      <h2>🤖 Veille technologique : IA et Monde du Travail</h2>
+      <p style="color:var(--muted);margin-bottom:15px">Analyse des problématiques liées à l'intelligence artificielle et son impact sur le monde professionnel.</p>
+      
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:15px;margin-bottom:20px">
+        <div style="padding:15px;background:rgba(102,126,234,0.05);border-left:3px solid #667eea;border-radius:6px">
+          <h4 style="color:#667eea;margin-bottom:8px">📊 Automatisation des Métiers</h4>
+          <p style="color:var(--muted);font-size:0.9em">Impact de l'automatisation sur l'emploi et les secteurs les plus touchés (manufacturing, customer service, data entry).</p>
+        </div>
+        
+        <div style="padding:15px;background:rgba(102,126,234,0.05);border-left:3px solid #667eea;border-radius:6px">
+          <h4 style="color:#667eea;margin-bottom:8px">🎓 Reskilling & Upskilling</h4>
+          <p style="color:var(--muted);font-size:0.9em">Formation continue pour adapter les compétences : data science, cybersécurité, intelligence émotionnelle.</p>
+        </div>
+        
+        <div style="padding:15px;background:rgba(102,126,234,0.05);border-left:3px solid #667eea;border-radius:6px">
+          <h4 style="color:#667eea;margin-bottom:8px">⚖️ Éthique & Biais de l'IA</h4>
+          <p style="color:var(--muted);font-size:0.9em">Biais algorithmiques et discriminations dans le recrutement, évaluation de performance et gestion RH.</p>
+        </div>
+        
+        <div style="padding:15px;background:rgba(102,126,234,0.05);border-left:3px solid #667eea;border-radius:6px">
+          <h4 style="color:#667eea;margin-bottom:8px">💡 IA Générative & Créativité</h4>
+          <p style="color:var(--muted);font-size:0.9em">ChatGPT et modèles de langage transforment les métiers créatifs (rédaction, design, développement, marketing).</p>
+        </div>
+        
+        <div style="padding:15px;background:rgba(102,126,234,0.05);border-left:3px solid #667eea;border-radius:6px">
+          <h4 style="color:#667eea;margin-bottom:8px">📜 Régulation & Gouvernance</h4>
+          <p style="color:var(--muted);font-size:0.9em">AI Act européenne, cadres légaux et standards de conformité pour les entreprises.</p>
+        </div>
+        
+        <div style="padding:15px;background:rgba(102,126,234,0.05);border-left:3px solid #667eea;border-radius:6px">
+          <h4 style="color:#667eea;margin-bottom:8px">🤝 Collaboration Homme-Machine</h4>
+          <p style="color:var(--muted);font-size:0.9em">Nouveaux métiers émergents : prompt engineer, AI trainer, AI ethicist, MLOps.</p>
+        </div>
+      </div>
+      
+      <div style="background:rgba(255,193,7,0.08);padding:15px;border-radius:8px;margin-bottom:15px">
+        <h4 style="margin-bottom:10px">⚠️ Problématiques principales identifiées</h4>
+        <ul style="color:var(--muted);margin-left:20px;line-height:1.8">
+          <li><strong>Déplacement d'emploi</strong> — Gap entre compétences actuelles et futures</li>
+          <li><strong>Inégalités croissantes</strong> — Élargissement du fossé économique</li>
+          <li><strong>Surveillance au travail</strong> — Risques de burnout et perte d'autonomie</li>
+          <li><strong>Manque de transparence</strong> — Décisions automatisées contestables</li>
+          <li><strong>Propriété intellectuelle</strong> — Questions sur les contenus générés par IA</li>
+          <li><strong>Cybersécurité</strong> — Protection des données personnelles</li>
+        </ul>
+      </div>
+      
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <span style="color:var(--muted);font-size:0.9em"><strong>Statistiques clés :</strong> 37% des emplois concernés d'ici 2030 • 78% des entreprises adoptent l'IA • 62% des salariés inquiets</span>
+      </div>
+      
+      <div class="project-links" style="margin-top:15px">
+        <a href="veille_ia_travail.html" target="_blank">Voir la veille complète</a>
+        <a href="#" target="_blank">Sources & Articles</a>
+      </div>
+    </section>
+
+    <section id="experience" class="card" style="margin-top:20px">
+      <h2>Stages & Expériences</h2>
+      <ul style="color:var(--muted)">
+        <li><strong>Stage BTS SIO</strong> — Développement de pages web, maintenance, intégration responsive</li>
+        <li><strong>Projet personnel</strong> — Création de sites vitrines et mini‑jeux JS</li>
+      </ul>
+    </section>
+
+    <section id="bts" class="card" style="margin-top:20px">
+      <h2>Compétences évaluées – BTS SIO</h2>
+      <ul style="color:var(--muted)">
+        <li>Développement d’applications web</li>
+        <li>Gestion de projets</li>
+        <li>Analyse des besoins clients</li>
+        <li>Maintenance et évolution d’un site</li>
+        <li>Veille technologique</li>
+      </ul>
+    </section>
+
+    <section id="contact" class="card" style="margin-top:20px">
+      <h2>Contact</h2>
+      <p style="color:var(--muted)">Tu peux me contacter via email ou LinkedIn. Le formulaire ci-dessous envoie un mail (side-effect : ouvre le client mail).</p>
+      <form class="contact-form" onsubmit="event.preventDefault();window.location='mailto:votremail@example.com?subject=Contact depuis portfolio Ouraga&body='+encodeURIComponent(document.getElementById('msg').value)">
+        <input placeholder="Ton nom" required>
+        <input type="email" placeholder="Ton email" required>
+        <textarea id="msg" rows="5" placeholder="Ton message" required></textarea>
+        <div style="display:flex;gap:10px;align-items:center">
+          <button class="primary" type="submit">Envoyer</button>
+          <a href="mailto:votremail@example.com" style="padding:10px 12px;border-radius:8px;border:1px solid rgba(0,0,0,0.06);text-decoration:none;color:var(--text)">Me mailer</a>
+        </div>
+      </form>
+    </section>
+
+  </main>
+
+  <footer>
+    <div>© <span id="year"></span> Portfolio Ouraga — BTS SIO</div>
+  </footer>
+
+  <script>
+    // année automatique
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // thème (stockage local)
+    const themeBtn = document.getElementById('themeBtn');
+    const body = document.body;
+    const saved = localStorage.getItem('ouraga-theme');
+    if(saved === 'dark') body.classList.add('dark');
+    themeBtn.addEventListener('click', ()=>{
+      body.classList.toggle('dark');
+      localStorage.setItem('ouraga-theme', body.classList.contains('dark') ? 'dark' : 'light');
+    });
+
+    // ouverture modal projet
+    const projects = document.querySelectorAll('.project');
+    const modal = document.getElementById('modal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalImg = document.getElementById('modalImg');
+    const modalDesc = document.getElementById('modalDesc');
+    const closeModal = document.getElementById('closeModal');
+
+    projects.forEach(p => {
+      p.addEventListener('click', ()=>{
+        const title = p.dataset.title || 'Projet';
+        const desc = p.dataset.desc || '';
+        const img = p.dataset.img || '';
+        modalTitle.textContent = title;
+        modalDesc.textContent = desc;
+        if(img){ modalImg.src = img; modalImg.style.display = 'block'; modalImg.alt = title; }
+        else { modalImg.style.display = 'none'; }
+        modal.classList.add('open');
+        modal.setAttribute('aria-hidden','false');
+      });
+    });
+    closeModal.addEventListener('click', ()=>{ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); });
+    modal.addEventListener('click', (e)=>{ if(e.target===modal) { modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); }});
+
+    // accessibility: close modal with ESC
+    document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') { modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); }});
+
+    // smooth scroll for internal links
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', (e)=>{
+        const href = a.getAttribute('href');
+        if(href.length>1){
+          e.preventDefault();
+          document.querySelector(href).scrollIntoView({behavior:'smooth', block:'start'});
+        }
+      });
+    });
+  </script>
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox" aria-hidden="true">
+    <button class="lb-close" id="lbClose">✕</button>
+    <img id="lbImg" src="" alt="Aperçu">
+  </div>
+
+  <script>
+    // lightbox images
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lbImg');
+    const lbClose = document.getElementById('lbClose');
+    document.querySelectorAll('.project-images img').forEach(img=>{
+      img.addEventListener('click', ()=>{
+        lbImg.src = img.src;
+        lb.classList.add('open');
+        lb.setAttribute('aria-hidden','false');
+      });
+    });
+    lbClose.addEventListener('click', ()=>{ lb.classList.remove('open'); lb.setAttribute('aria-hidden','true'); });
+    lb.addEventListener('click', (e)=>{ if(e.target===lb){ lb.classList.remove('open'); lb.setAttribute('aria-hidden','true'); }});
+  </script>
+</body>
+</html>
