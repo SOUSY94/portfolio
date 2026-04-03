@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Portfolio Ouraga — BTS SIO</title>
+  <meta name="description" content="Portfolio de Yann Ouraga, étudiant BTS SIO — Développement web, projets et veille technologique.">
+  <style>
+    :root{
+      --bg:#0a0e27;
+      --card:#1a1f3a;
+      --text:#e6eef6;
+      --muted:#98a2b3;
+      --accent:#6366f1;
+      --accent-2:#ec4899;
+      --glass:rgba(255,255,255,0.05);
+      --radius:16px;
+    }
+    .light{
+      --bg:#f0f2f5;
+      --card:#ffffff;
+      --text:#111;
+      --muted:#6b7280;
+      --accent:#6366f1;
+      --accent-2:#ec4899;
+      --glass:rgba(255,255,255,0.7);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+      background:linear-gradient(135deg,var(--bg) 0%,#1a1f3a 50%,#2d1b4e 100%);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      line-height:1.6;
+      transition:background .3s,color .3s;
+      overflow-x:hidden;
+    }
+    .light body,
+    body.light{
+      background:linear-gradient(135deg,#f0f2f5 0%,#e8ecf1 50%,#dde1e7 100%);
+    }
+    body::before{
+      content:'';position:fixed;inset:0;
+      background:radial-gradient(circle at 20% 50%,rgba(99,102,241,0.15),transparent 50%),
+                 radial-gradient(circle at 80% 80%,rgba(236,72,153,0.15),transparent 50%);
+      pointer-events:none;z-index:0;
+    }
+
+    /* ─── HEADER ─── */
+    header{
+      padding:20px 32px;display:flex;gap:20px;align-items:center;justify-content:space-between;
+      position:sticky;top:0;backdrop-filter:blur(20px);
+      background:rgba(26,31,58,0.8);border-bottom:1px solid rgba(255,255,255,0.1);
+      z-index:100;animation:slideDown .6s ease;
+    }
+    .light header{background:rgba(255,255,255,0.85);border-bottom-color:rgba(0,0,0,0.08)}
+    @keyframes slideDown{from{transform:translateY(-100%);opacity:0}to{transform:translateY(0);opacity:1}}
+    .brand{display:flex;gap:14px;align-items:center}
+    .logo{
+      width:56px;height:56px;border-radius:14px;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      display:flex;align-items:center;justify-content:center;
+      color:#fff;font-weight:800;font-size:22px;
+      box-shadow:0 8px 24px rgba(99,102,241,0.4);position:relative;overflow:hidden;
+    }
+    .logo::before{
+      content:'';position:absolute;inset:0;
+      background:linear-gradient(45deg,transparent,rgba(255,255,255,0.2),transparent);
+      transform:translateX(-100%);animation:shine 3s infinite;
+    }
+    @keyframes shine{to{transform:translateX(100%)}}
+    header h1{font-size:1.2rem;margin:0;color:#fff;font-weight:700}
+    .light header h1{color:#111}
+    .subtitle{font-size:.88rem;color:var(--muted)}
+
+    /* ─── NAV ─── */
+    nav{display:flex;gap:8px;align-items:center}
+    nav a{
+      color:#fff;text-decoration:none;padding:10px 18px;border-radius:10px;
+      font-weight:600;font-size:.95rem;transition:.3s;position:relative;
+    }
+    .light nav a{color:#333}
+    nav a::before{
+      content:'';position:absolute;bottom:0;left:50%;width:0;height:2px;
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      transform:translateX(-50%);transition:width .3s;
+    }
+    nav a:hover{background:rgba(99,102,241,0.15);color:var(--accent)}
+    nav a:hover::before{width:80%}
+    #themeBtn{
+      margin-left:8px;padding:8px 12px;border-radius:8px;border:0;cursor:pointer;
+      font-size:.9rem;font-weight:600;transition:.3s;
+      background:rgba(255,255,255,0.1);color:#fff;
+    }
+    .light #themeBtn{background:rgba(0,0,0,0.08);color:#333}
+
+    /* ─── HAMBURGER ─── */
+    .hamburger{
+      display:none;background:none;border:none;cursor:pointer;padding:8px;
+      flex-direction:column;gap:5px;
+    }
+    .hamburger span{display:block;width:26px;height:3px;background:#fff;border-radius:3px;transition:.3s}
+    .light .hamburger span{background:#333}
+    .mobile-nav{
+      display:none;position:fixed;inset:0;
+      background:rgba(10,14,39,0.97);backdrop-filter:blur(20px);
+      z-index:200;flex-direction:column;align-items:center;justify-content:center;gap:20px;
+    }
+    .mobile-nav.open{display:flex}
+    .mobile-nav a{
+      color:#fff;text-decoration:none;font-size:1.3rem;font-weight:600;
+      padding:12px 24px;border-radius:10px;transition:.3s;
+    }
+    .mobile-nav a:hover{background:rgba(99,102,241,0.2)}
+    .mobile-nav .close-menu{
+      position:absolute;top:20px;right:24px;background:none;border:none;
+      color:#fff;font-size:2rem;cursor:pointer;
+    }
+
+    /* ─── LAYOUT ─── */
+    .container{max-width:1200px;margin:60px auto;padding:0 32px;position:relative;z-index:1}
+    .grid{display:grid;gap:28px}
+
+    /* ─── HERO ─── */
+    .hero{display:grid;grid-template-columns:1fr 400px;gap:40px;align-items:center;margin-bottom:60px}
+    .card{
+      background:rgba(26,31,58,0.6);border-radius:var(--radius);padding:32px;
+      box-shadow:0 20px 60px rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.1);
+      backdrop-filter:blur(10px);transition:.4s;animation:fadeInUp .8s ease;
+    }
+    .light .card{background:rgba(255,255,255,0.8);border-color:rgba(0,0,0,0.06);box-shadow:0 10px 40px rgba(0,0,0,0.08)}
+    @keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+    .card:hover{transform:translateY(-8px);box-shadow:0 30px 80px rgba(99,102,241,0.3);border-color:rgba(99,102,241,0.4)}
+    .intro h2{
+      margin:0 0 16px;font-size:2.8rem;font-weight:800;
+      background:linear-gradient(135deg,#fff 0%,var(--accent) 100%);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.2;
+    }
+    .light .intro h2{background:linear-gradient(135deg,#111 0%,var(--accent) 100%);-webkit-background-clip:text;background-clip:text}
+    .intro p{color:var(--muted);font-size:1.1rem;line-height:1.7}
+
+    .profile-img{
+      width:100%;border-radius:var(--radius);object-fit:cover;height:400px;
+      box-shadow:0 20px 60px rgba(0,0,0,0.4);border:2px solid rgba(255,255,255,0.1);transition:.4s;
+    }
+    .profile-img:hover{transform:scale(1.02) rotate(1deg);box-shadow:0 30px 80px rgba(99,102,241,0.4)}
+    .photo-placeholder{
+      width:100%;height:400px;border-radius:var(--radius);
+      background:linear-gradient(135deg,rgba(99,102,241,0.2),rgba(236,72,153,0.2));
+      display:flex;align-items:center;justify-content:center;color:var(--muted);
+      font-size:1.1rem;text-align:center;border:2px dashed rgba(255,255,255,0.2);
+    }
+
+    /* ─── SKILLS ─── */
+    .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;margin-top:20px}
+    .skill{
+      background:linear-gradient(135deg,rgba(99,102,241,0.1),rgba(236,72,153,0.1));
+      padding:16px 20px;border-radius:12px;text-align:center;font-weight:700;color:#fff;
+      border:1px solid rgba(255,255,255,0.1);transition:.3s;cursor:default;position:relative;overflow:hidden;
+    }
+    .light .skill{color:#333}
+    .skill::before{
+      content:'';position:absolute;inset:0;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));opacity:0;transition:opacity .3s;
+    }
+    .skill:hover{transform:translateY(-4px) scale(1.05);box-shadow:0 12px 30px rgba(99,102,241,0.4);border-color:var(--accent)}
+    .skill:hover::before{opacity:.2}
+    .skill span{position:relative;z-index:1}
+
+    /* ─── PROJECTS ─── */
+    .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:28px;margin-top:28px}
+    .project-images{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+    .project-images img{
+      width:100%;height:80px;object-fit:cover;border-radius:8px;
+      border:1px solid rgba(255,255,255,0.1);transition:.3s;cursor:pointer;
+    }
+    .project-images img:hover{transform:scale(1.1) rotate(2deg);box-shadow:0 8px 20px rgba(99,102,241,0.4);z-index:2}
+    .project-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+    .project-links a{
+      padding:8px 16px;border-radius:10px;
+      background:linear-gradient(135deg,rgba(99,102,241,0.2),rgba(236,72,153,0.2));
+      border:1px solid rgba(255,255,255,0.1);text-decoration:none;color:#fff;
+      font-size:.9rem;font-weight:600;transition:.3s;
+    }
+    .project-links a:hover{
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      transform:translateY(-2px);box-shadow:0 6px 20px rgba(99,102,241,0.4);
+    }
+    .project{
+      background:rgba(26,31,58,0.6);border-radius:var(--radius);padding:28px;
+      border:1px solid rgba(255,255,255,0.1);backdrop-filter:blur(10px);transition:.4s;
+      position:relative;overflow:hidden;
+    }
+    .light .project{background:rgba(255,255,255,0.7);border-color:rgba(0,0,0,0.06)}
+    .project::before{
+      content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;
+      background:linear-gradient(90deg,transparent,rgba(99,102,241,0.1),transparent);transition:left .6s;
+    }
+    .project:hover::before{left:100%}
+    .project:hover{transform:translateY(-10px);box-shadow:0 20px 60px rgba(99,102,241,0.4);border-color:rgba(99,102,241,0.5)}
+    .project h3{margin:0 0 12px;font-size:1.5rem;color:#fff;font-weight:700}
+    .light .project h3{color:#111}
+    .project p{margin:0 0 16px;font-size:1rem;color:var(--muted);line-height:1.6}
+
+    .img-placeholder{
+      width:100%;height:80px;border-radius:8px;background:rgba(99,102,241,0.1);
+      border:1px dashed rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;
+      color:var(--muted);font-size:.75rem;text-align:center;
+    }
+
+    /* ─── MODAL ─── */
+    .modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(2,6,23,0.6);opacity:0;pointer-events:none;transition:opacity .2s;z-index:150}
+    .modal.open{opacity:1;pointer-events:auto}
+    .modal .dialog{width:min(900px,96%);max-height:86vh;overflow:auto;border-radius:12px;background:var(--card);padding:18px}
+    .modal .dialog img{max-width:100%;border-radius:8px}
+
+    /* ─── CONTACT ─── */
+    .contact-form{display:grid;gap:12px}
+    input,textarea{padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.12);background:transparent;color:var(--text);font-family:inherit}
+    .light input,.light textarea{border-color:rgba(0,0,0,0.12)}
+    button.primary{
+      background:var(--accent);color:#fff;padding:10px 14px;border-radius:10px;border:0;
+      font-weight:700;cursor:pointer;transition:.3s;font-family:inherit;
+    }
+    button.primary:hover{background:var(--accent-2);transform:translateY(-2px)}
+
+    footer{text-align:center;padding:28px 12px;color:var(--muted)}
+
+    /* ─── LIGHTBOX ─── */
+    .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;z-index:100}
+    .lightbox.open{display:flex}
+    .lightbox img{max-width:92%;max-height:92%;border-radius:12px;box-shadow:0 30px 80px rgba(0,0,0,.4)}
+    .lb-close{position:absolute;top:18px;right:18px;background:#fff;border:0;border-radius:10px;padding:8px 10px;font-weight:700;cursor:pointer}
+
+    /* ─── RESPONSIVE ─── */
+    @media(max-width:900px){
+      .hero{grid-template-columns:1fr}
+      nav{display:none}
+      .hamburger{display:flex}
+      header{gap:12px}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ MENU MOBILE ═══ -->
+  <div class="mobile-nav" id="mobileNav">
+    <button class="close-menu" id="closeMenu">&times;</button>
+    <a href="#about" class="mobile-link">À propos</a>
+    <a href="#projects" class="mobile-link">Projets</a>
+    <a href="#veille" class="mobile-link">Veille</a>
+    <a href="#experience" class="mobile-link">Stages</a>
+    <a href="#contact" class="mobile-link">Contact</a>
+    <a href="stage.html" class="mobile-link">Page Stage</a>
+    <a href="assets/CV_Ouraga.pdf" download class="mobile-link">Télécharger CV</a>
+  </div>
+
+  <!-- ═══ HEADER ═══ -->
+  <header>
+    <div class="brand">
+      <div class="logo">O</div>
+      <div>
+        <h1>Portfolio Ouraga</h1>
+        <div class="subtitle">Étudiant BTS SIO — 2 années de projets</div>
+      </div>
+    </div>
+
+    <nav>
+      <a href="#about">À propos</a>
+      <a href="#projects">Projets</a>
+      <a href="#veille">Veille</a>
+      <a href="stage.html">Stage</a>
+      <a href="assets/CV_Ouraga.pdf" download>Télécharger CV</a>
+      <button id="themeBtn" aria-label="Changer thème">🌙 Thème</button>
+    </nav>
+
+    <button class="hamburger" id="hamburger" aria-label="Ouvrir le menu">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <!-- ═══ CONTENU PRINCIPAL ═══ -->
+  <main class="container">
+
+    <!-- HERO / À PROPOS -->
+    <section id="about" class="grid hero">
+      <div class="card intro">
+        <h2>Salut, moi c'est Ouraga 👋</h2>
+        <p>Je suis étudiant en BTS Services Informatiques aux Organisations (SIO). Pendant mes deux années, j'ai réalisé plusieurs projets en développement web. Ce portfolio regroupe mes réalisations et mes compétences.</p>
+
+        <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap">
+          <a href="#projects" style="text-decoration:none;padding:10px 12px;background:var(--accent);color:#fff;border-radius:8px;font-weight:700">Voir mes projets</a>
+        </div>
+
+        <div style="margin-top:18px">
+          <h3 style="margin-bottom:8px">Compétences clés</h3>
+          <div class="skills-grid">
+            <div class="skill">HTML &amp; CSS</div>
+            <div class="skill">JavaScript</div>
+            <div class="skill">PHP &amp; MySQL</div>
+            <div class="skill">Administration Réseau</div>
+            <div class="skill">Sécurité</div>
+            <div class="skill">Git</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <!--
+          ╔═══════════════════════════════════════════════════════╗
+          ║  PHOTO DE PROFIL                                     ║
+          ║  1. Place ta photo dans images/profile.jpg           ║
+          ║  2. Décommente la ligne <img> ci-dessous             ║
+          ║  3. Supprime le <div class="photo-placeholder">     ║
+          ╚═══════════════════════════════════════════════════════╝
+        -->
+        <!-- <img src="images/profile.jpg" alt="Photo de profil Ouraga" class="profile-img"> -->
+        <div class="photo-placeholder">📷 Ajoute ta photo ici<br><small>Place <strong>profile.jpg</strong> dans le dossier <strong>images/</strong></small></div>
+      </div>
+    </section>
+
+    <!-- COMPÉTENCES -->
+    <section id="skills" class="card" style="margin-top:20px">
+      <h2>Compétences détaillées</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px">
+        <div>
+          <h4>Frontend</h4>
+          <ul style="color:var(--muted)">
+            <li>HTML, CSS</li>
+            <li>JavaScript</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Backend / DB</h4>
+          <ul style="color:var(--muted)">
+            <li>PHP, MySQL</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Réseau &amp; Sys</h4>
+          <ul style="color:var(--muted)">
+            <li>Configuration de base d'un réseau</li>
+            <li>Administration Linux de base</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Sécurité</h4>
+          <ul style="color:var(--muted)">
+            <li>Bonnes pratiques, gestion des mots de passe</li>
+            <li>Analyse de vulnérabilités basique</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ PROJETS ═══════════════ -->
+    <section id="projects" style="margin-top:20px">
+      <h2 style="margin-bottom:20px;color:#fff">Mes Projets</h2>
+
+      <div class="projects-grid">
+
+        <!-- PROJET 1 : SITE VITRINE -->
+        <article class="project card">
+          <h3>Site Vitrine</h3>
+          <p>
+            Dans le cadre de ce projet, il fallait réaliser un site vitrine en HTML et CSS.
+            J'ai choisi de créer un site vitrine de précommande de chaussures.
+            Le site présente différents modèles disponibles en précommande,
+            avec des informations sur les produits, les prix et les délais.
+            Ce projet m'a permis de développer mes compétences en structure HTML,
+            mise en page avec CSS et conception d'une interface web responsive.
+          </p>
+          <p><strong>Technologies :</strong> HTML, CSS</p>
+
+          <div class="project-images">
+            <!--
+              Place tes captures dans images/vitrine1.png, vitrine2.png, vitrine3.png
+              puis remplace les placeholders par :
+              <img src="images/vitrine1.png" alt="Accueil site vitrine">
+            -->
+            <div class="img-placeholder">📷 vitrine1.png</div>
+            <div class="img-placeholder">📷 vitrine2.png</div>
+            <div class="img-placeholder">📷 vitrine3.png</div>
+          </div>
+
+          <div class="project-links">
+            <a href="https://github.com/SOUSY94/portfolio" target="_blank" rel="noopener">GitHub</a>
+          </div>
+        </article>
+
+        <!-- PROJET 2 : MEMORY GAME -->
+        <article class="project card">
+          <h3>Memory Game — Jeu de Mémoire Naruto</h3>
+          <p>
+            Jeu de mémoire interactif inspiré de Naruto.
+            Le joueur doit retourner des cartes et retrouver les paires correspondantes pour gagner.
+            Ce projet m'a permis de développer mes compétences en logique de programmation,
+            gestion d'événements et interface utilisateur.
+          </p>
+          <p><strong>Technologies :</strong> JavaScript</p>
+
+          <div class="project-images">
+            <img src="images/jeu1.gif" alt="Écran de démarrage du jeu">
+            <img src="images/jeu2.gif" alt="Jeu en cours">
+            <img src="images/jeu3.png" alt="Bouton commencer">
+          </div>
+
+          <div class="project-links">
+            <a href="https://github.com/SOUSY94/portfolio" target="_blank" rel="noopener">GitHub</a>
+          </div>
+        </article>
+
+        <!-- PROJET 3 : WORDPRESS -->
+        <article class="project card">
+          <h3>Site WordPress</h3>
+          <p>
+            Création d'un site WordPress avec personnalisation du thème pour un réalisateur de vidéo clip.
+            Le projet a consisté à configurer WordPress, personnaliser le thème choisi et intégrer
+            les contenus (textes, images, vidéos) pour créer un site fonctionnel et attractif.
+          </p>
+          <p><strong>Technologies :</strong> WordPress</p>
+
+          <div class="project-images">
+            <!--
+              Place tes captures dans images/wordpress1.png, etc.
+              puis remplace les placeholders.
+            -->
+            <div class="img-placeholder">📷 wordpress1.png</div>
+            <div class="img-placeholder">📷 wordpress2.png</div>
+            <div class="img-placeholder">📷 wordpress3.png</div>
+          </div>
+        </article>
+
+        <!-- PROJET 4 : GEST TRAVAUX -->
+        <article class="project card">
+          <h3>Projet Gest Travaux</h3>
+          <p>
+            Projet réalisé en duo, intégrant des formulaires et une base de données.
+            Ce projet a débuté lors de ma deuxième année de BTS et sera présenté lors de l'épreuve E6.
+            Il met en avant mes compétences en développement web, gestion de données
+            et interactions utilisateur via des formulaires reliés à la base de données.
+          </p>
+          <p><strong>Technologies :</strong> PHP, MySQL, HTML, CSS</p>
+
+          <div class="project-images">
+            <div class="img-placeholder">📷 gest1.png</div>
+            <div class="img-placeholder">📷 gest2.png</div>
+            <div class="img-placeholder">📷 gest3.png</div>
+          </div>
+        </article>
+
+        <!-- PROJET 5 : PORTFOLIO -->
+        <article class="project card">
+          <h3>Portfolio Personnel</h3>
+          <p>
+            Portfolio interactif créé pour présenter mes projets et les compétences développées
+            en développement web au cours de mes deux années de formation.
+          </p>
+          <p><strong>Technologies :</strong> HTML, CSS, JavaScript</p>
+
+          <div class="project-links">
+            <a href="https://github.com/SOUSY94/portfolio" target="_blank" rel="noopener">GitHub</a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ═══════════════ VEILLE TECHNOLOGIQUE ═══════════════ -->
+    <section id="veille" class="card" style="margin-top:20px">
+      <h2>🤖 Veille technologique : IA et Monde du Travail</h2>
+      <p style="color:var(--muted);margin-bottom:15px">Analyse des problématiques liées à l'intelligence artificielle et son impact sur le monde professionnel.</p>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:15px;margin-bottom:20px">
+        <div style="padding:15px;background:rgba(102,126,234,0.05);border-left:3px solid #667eea;border-radius:6px">
+          <h4 style="color:#667eea;margin-bottom:8px">📊 Automatisation des Métiers</h4>
+          <p style="color:var(--muted);font-size:.9em">Impact de l'automatisation sur l'emploi et les secteurs les plus touchés.</p>
+        </div>
+        <div style="padding:15px;background:rgba(102,126,234,0.05);border-left:3px solid #667eea;border-radius:6px">
+          <h4 style="color:#667eea;margin-bottom:8px">🎓 Reskilling &amp; Upskilling</h4>
+          <p style="color:var(--muted);font-size:.9em">Formation continue : data science, cybersécurité, intelligence émotionnelle.</p>
+        </div>
+        <div style="padding:15px;background:rgba(102,126,234,0.05);border-left:3px solid #667eea;border-radius:6px">
+          <h4 style="color:#667eea;margin-bottom:8px">⚖️ Éthique &amp; Biais de l'IA</h4>
+          <p style="color:var(--muted);font-size:.9em">Biais algorithmiques et discriminations dans le recrutement et la gestion RH.</p>
+        </div>
+        <div style="padding:15px;background:rgba(102,126,234,0.05);border-left:3px solid #667eea;border-radius:6px">
+          <h4 style="color:#667eea;margin-bottom:8px">💡 IA Générative &amp; Créativité</h4>
+          <p style="color:var(--muted);font-size:.9em">ChatGPT et modèles de langage transforment les métiers créatifs.</p>
+        </div>
+        <div style="padding:15px;background:rgba(102,126,234,0.05);border-left:3px solid #667eea;border-radius:6px">
+          <h4 style="color:#667eea;margin-bottom:8px">📜 Régulation &amp; Gouvernance</h4>
+          <p style="color:var(--muted);font-size:.9em">AI Act européen, cadres légaux et standards de conformité.</p>
+        </div>
+        <div style="padding:15px;background:rgba(102,126,234,0.05);border-left:3px solid #667eea;border-radius:6px">
+          <h4 style="color:#667eea;margin-bottom:8px">🤝 Collaboration Homme-Machine</h4>
+          <p style="color:var(--muted);font-size:.9em">Nouveaux métiers : prompt engineer, AI trainer, AI ethicist, MLOps.</p>
+        </div>
+      </div>
+
+      <div style="background:rgba(255,193,7,0.08);padding:15px;border-radius:8px;margin-bottom:15px">
+        <h4 style="margin-bottom:10px">⚠️ Problématiques principales identifiées</h4>
+        <ul style="color:var(--muted);margin-left:20px;line-height:1.8">
+          <li><strong>Déplacement d'emploi</strong> — Gap entre compétences actuelles et futures</li>
+          <li><strong>Inégalités croissantes</strong> — Élargissement du fossé économique</li>
+          <li><strong>Surveillance au travail</strong> — Risques de burnout et perte d'autonomie</li>
+          <li><strong>Manque de transparence</strong> — Décisions automatisées contestables</li>
+          <li><strong>Propriété intellectuelle</strong> — Questions sur les contenus générés par IA</li>
+          <li><strong>Cybersécurité</strong> — Protection des données personnelles</li>
+        </ul>
+      </div>
+
+      <p style="color:var(--muted);font-size:.9em"><strong>Statistiques clés :</strong> 37% des emplois concernés d'ici 2030 · 78% des entreprises adoptent l'IA · 62% des salariés inquiets</p>
+
+      <div class="project-links" style="margin-top:15px">
+        <a href="veille.html" target="_blank" rel="noopener">Voir la veille complète</a>
+      </div>
+    </section>
+
+    <!-- ═══════════════ STAGES ═══════════════ -->
+    <section id="experience" class="card" style="margin-top:20px">
+      <h2>Stages &amp; Expériences</h2>
+      <ul style="color:var(--muted)">
+        <li><strong>Stage BTS SIO</strong> — Développement de pages web, maintenance, intégration responsive</li>
+        <li><strong>Projet personnel</strong> — Création de sites vitrines et mini-jeux JS</li>
+      </ul>
+      <div class="project-links" style="margin-top:15px">
+        <a href="stage.html">Voir le détail du stage</a>
+      </div>
+    </section>
+
+    <!-- BTS -->
+    <section id="bts" class="card" style="margin-top:20px">
+      <h2>Compétences évaluées — BTS SIO</h2>
+      <ul style="color:var(--muted)">
+        <li>Développement d'applications web</li>
+        <li>Gestion de projets</li>
+        <li>Analyse des besoins clients</li>
+        <li>Maintenance et évolution d'un site</li>
+        <li>Veille technologique</li>
+      </ul>
+    </section>
+
+    <!-- ═══════════════ CONTACT ═══════════════ -->
+    <section id="contact" class="card" style="margin-top:20px">
+      <h2>Contact</h2>
+      <p style="color:var(--muted);margin-bottom:12px">Tu peux me contacter via email. Le formulaire ci-dessous ouvre ton client mail.</p>
+      <!--
+        ⚠️ REMPLACE ton.email@gmail.com par ta vraie adresse (2 endroits).
+      -->
+      <form class="contact-form" onsubmit="event.preventDefault();window.location='mailto:ton.email@gmail.com?subject=Contact portfolio Ouraga&amp;body='+encodeURIComponent(document.getElementById('msg').value)">
+        <input placeholder="Ton nom" required>
+        <input type="email" placeholder="Ton email" required>
+        <textarea id="msg" rows="5" placeholder="Ton message" required></textarea>
+        <div style="display:flex;gap:10px;align-items:center">
+          <button class="primary" type="submit">Envoyer</button>
+          <a href="mailto:ton.email@gmail.com" style="padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.15);text-decoration:none;color:var(--text)">Me mailer directement</a>
+        </div>
+      </form>
+    </section>
+
+  </main>
+
+  <footer>
+    <div>© <span id="year"></span> Portfolio Ouraga — BTS SIO</div>
+  </footer>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" class="lightbox" aria-hidden="true">
+    <button class="lb-close" id="lbClose">✕</button>
+    <img id="lbImg" src="" alt="Aperçu">
+  </div>
+
+  <!-- ═══ SCRIPTS ═══ -->
+  <script>
+    // Année automatique
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Thème clair / sombre
+    const themeBtn = document.getElementById('themeBtn');
+    const saved = localStorage.getItem('ouraga-theme');
+    if (saved === 'light') document.body.classList.add('light');
+    themeBtn.addEventListener('click', () => {
+      document.body.classList.toggle('light');
+      const isLight = document.body.classList.contains('light');
+      localStorage.setItem('ouraga-theme', isLight ? 'light' : 'dark');
+      themeBtn.textContent = isLight ? '🌙 Sombre' : '☀️ Clair';
+    });
+    // Init button label
+    if (document.body.classList.contains('light')) themeBtn.textContent = '🌙 Sombre';
+    else themeBtn.textContent = '☀️ Clair';
+
+    // Menu mobile
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+    const closeMenu = document.getElementById('closeMenu');
+    hamburger.addEventListener('click', () => mobileNav.classList.add('open'));
+    closeMenu.addEventListener('click', () => mobileNav.classList.remove('open'));
+    document.querySelectorAll('.mobile-link').forEach(a => {
+      a.addEventListener('click', () => mobileNav.classList.remove('open'));
+    });
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const href = a.getAttribute('href');
+        if (href.length > 1) {
+          const target = document.querySelector(href);
+          if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+        }
+      });
+    });
+
+    // Lightbox
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lbImg');
+    const lbClose = document.getElementById('lbClose');
+    document.querySelectorAll('.project-images img').forEach(img => {
+      img.addEventListener('click', () => {
+        lbImg.src = img.src;
+        lb.classList.add('open');
+        lb.setAttribute('aria-hidden', 'false');
+      });
+    });
+    lbClose.addEventListener('click', () => { lb.classList.remove('open'); lb.setAttribute('aria-hidden', 'true'); });
+    lb.addEventListener('click', e => { if (e.target === lb) { lb.classList.remove('open'); lb.setAttribute('aria-hidden', 'true'); } });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') { lb.classList.remove('open'); lb.setAttribute('aria-hidden', 'true'); } });
+  </script>
+</body>
+</html>

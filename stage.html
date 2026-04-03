@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stage BTS SIO — Ouraga</title>
+  <meta name="description" content="Détail des stages réalisés par Yann Ouraga durant son BTS SIO.">
+  <style>
+    :root{
+      --bg:#0a0e27;--card:#1a1f3a;--text:#e6eef6;--muted:#98a2b3;
+      --accent:#6366f1;--accent2:#ec4899;--radius:16px;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{
+      font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+      background:linear-gradient(135deg,#0a0e27,#1a1f3a,#2d1b4e);
+      color:var(--text);line-height:1.6;
+    }
+    header{
+      padding:20px 40px;display:flex;justify-content:space-between;align-items:center;
+      background:rgba(26,31,58,0.8);backdrop-filter:blur(15px);
+      border-bottom:1px solid rgba(255,255,255,0.1);position:sticky;top:0;z-index:100;
+    }
+    .logo{
+      width:50px;height:50px;border-radius:12px;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      display:flex;align-items:center;justify-content:center;
+      font-weight:800;color:#fff;font-size:20px;
+    }
+    nav a{
+      color:#fff;text-decoration:none;margin-left:20px;font-weight:600;
+      transition:.3s;padding:8px 16px;border-radius:8px;
+    }
+    nav a:hover{color:var(--accent);background:rgba(99,102,241,0.15)}
+    .container{max-width:1100px;margin:60px auto;padding:0 20px}
+    .card{
+      background:rgba(26,31,58,0.6);border-radius:var(--radius);padding:30px;margin-bottom:30px;
+      border:1px solid rgba(255,255,255,0.1);backdrop-filter:blur(10px);transition:.3s;
+    }
+    .card:hover{transform:translateY(-5px);box-shadow:0 15px 40px rgba(99,102,241,0.3)}
+    h1{font-size:2.5rem;margin-bottom:10px}
+    h2{margin-bottom:15px;color:var(--accent)}
+    h3{margin-bottom:10px;color:#fff}
+    h4{color:var(--accent);margin-bottom:6px}
+    p{color:var(--muted)}
+
+    .info-grid{
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;margin-top:15px;
+    }
+    .info-item{
+      background:rgba(99,102,241,0.08);padding:15px;border-radius:12px;border-left:3px solid var(--accent);
+    }
+    .info-item strong{color:#fff;display:block;margin-bottom:4px}
+
+    .grid{
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-top:20px;
+    }
+    .task{
+      background:rgba(99,102,241,0.1);padding:20px;border-radius:12px;
+      border:1px solid rgba(255,255,255,0.1);transition:.4s;overflow:hidden;
+    }
+    .task:hover{transform:translateY(-8px);background:rgba(99,102,241,0.25);box-shadow:0 10px 30px rgba(99,102,241,0.4)}
+    .task-img-placeholder{
+      width:100%;height:160px;border-radius:10px;margin-bottom:12px;
+      background:rgba(99,102,241,0.15);border:1px dashed rgba(255,255,255,0.2);
+      display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:.85rem;text-align:center;
+    }
+    .task img{width:100%;height:160px;object-fit:cover;border-radius:10px;margin-bottom:12px;transition:.4s}
+    .task:hover img{transform:scale(1.05)}
+
+    .button-mission{
+      display:inline-block;margin-top:12px;padding:10px 20px;border-radius:10px;
+      text-decoration:none;font-weight:600;color:#fff;margin-right:10px;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));transition:.3s;
+    }
+    .button-mission:hover{transform:scale(1.05);box-shadow:0 5px 20px rgba(99,102,241,0.5)}
+
+    footer{text-align:center;padding:30px;color:var(--muted)}
+    @media(max-width:768px){header{flex-direction:column;gap:10px}}
+  </style>
+</head>
+<body>
+
+  <header>
+    <div style="display:flex;align-items:center;gap:15px">
+      <div class="logo">O</div>
+      <div>
+        <strong>Portfolio Ouraga</strong><br>
+        <span style="font-size:.9rem;color:var(--muted)">BTS SIO</span>
+      </div>
+    </div>
+    <nav>
+      <a href="index.html">← Accueil</a>
+    </nav>
+  </header>
+
+  <div class="container">
+
+    <!-- INTRO -->
+    <div class="card">
+      <h1>Mon Stage</h1>
+      <p>
+        Durant mon BTS SIO, j'ai réalisé un stage en entreprise qui m'a permis de développer mes compétences
+        en informatique et de découvrir le monde professionnel. Au cours de mes deux années de formation,
+        j'ai effectué mes deux périodes de stage au sein de la même entreprise et sous la supervision du même tuteur.
+        Cela m'a permis de suivre l'évolution de l'activité, d'approfondir mes compétences techniques
+        et de m'impliquer davantage dans les missions confiées.
+      </p>
+    </div>
+
+    <!-- ENTREPRISE -->
+    <div class="card">
+      <h2>Présentation de l'entreprise</h2>
+      <div class="info-grid">
+        <div class="info-item"><strong>Nom</strong><p>FADIL MADJ</p></div>
+        <div class="info-item"><strong>Secteur</strong><p>E-Commerce</p></div>
+        <div class="info-item"><strong>Lieu</strong><p>92100 Boulogne-Billancourt</p></div>
+        <div class="info-item"><strong>Durée</strong><p>2 ans</p></div>
+        <div class="info-item"><strong>Tuteur</strong><p>FADIL MADJ</p></div>
+      </div>
+
+      <h3 style="margin-top:25px">Description juridique</h3>
+      <p>
+        L'entreprise est une entreprise individuelle (EI) spécialisée dans le e-commerce.
+        L'activité est gérée par une seule personne, à la fois dirigeant et responsable.
+      </p>
+      <p style="margin-top:10px">
+        Elle évolue sur le marché du commerce en ligne, plus précisément dans le e-commerce saisonnier,
+        avec des produits adaptés à certaines périodes de l'année ou à des tendances spécifiques.
+      </p>
+      <p style="margin-top:10px">
+        Pour se démarquer, l'entreprise met en place différentes stratégies commerciales et marketing :
+        création de boutiques en ligne, promotion sur internet et analyse du marché
+        pour optimiser les ventes et augmenter le chiffre d'affaires.
+      </p>
+    </div>
+
+    <!-- MISSIONS -->
+    <div class="card">
+      <h2>Mes Missions</h2>
+      <div class="grid">
+
+        <div class="task">
+          <!--
+            Place ta capture dans images/stage1.png puis remplace le placeholder :
+            <img src="images/stage1.png" alt="Stage SIO1 - Site Shopify">
+          -->
+          <div class="task-img-placeholder">📷 images/stage1.png</div>
+          <h3>Stage SIO1</h3>
+          <p>
+            Participation à la création d'un site de vente en ligne sur Shopify.
+            Le site vendait des produits saisonniers (pantoufles en forme de vache).
+            J'ai contribué à la mise en place de la boutique, l'organisation des pages produits
+            et la présentation des articles pour rendre le site attractif.
+          </p>
+        </div>
+
+        <div class="task">
+          <!--
+            Place ta capture dans images/stage2.png puis remplace le placeholder :
+            <img src="images/stage2.png" alt="Stage SIO2 - Site anti-tabac">
+          -->
+          <div class="task-img-placeholder">📷 images/stage2.png</div>
+          <h3>Stage SIO2</h3>
+          <p>
+            Travail sur un site e-commerce destiné à la vente de produits pour aider
+            les personnes à arrêter de fumer. Cette expérience m'a permis de mieux comprendre
+            la gestion d'un site de vente en ligne et l'importance de l'expérience utilisateur.
+          </p>
+        </div>
+
+        <div class="task">
+          <h3>Attestations de Stage</h3>
+          <p>
+            Mes deux attestations de stage réalisées durant mes deux années de formation.
+            Ces stages m'ont permis d'acquérir de l'expérience en développement web et e-commerce.
+          </p>
+          <!--
+            Place tes attestations PDF dans assets/ puis mets à jour les noms :
+          -->
+          <a href="assets/attestation-sio1.pdf" class="button-mission">Attestation 1</a>
+          <a href="assets/attestation-sio2.pdf" class="button-mission">Attestation 2</a>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <footer>© 2026 Portfolio Ouraga — BTS SIO</footer>
+
+</body>
+</html>
